@@ -1,0 +1,1 @@
+ $('#table-empenhos').DataTable();

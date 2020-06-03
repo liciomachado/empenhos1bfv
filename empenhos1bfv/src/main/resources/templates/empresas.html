@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="" layout:fragment="corpo">
+		<div class="row">
+		
+		    <div id="loader-form" class="pre-load"></div>
+
+			<h3 class="header">CADASTRO DE EMPRESAS</h3>
+
+			<form action="#" id="form-empresa" class="col s12">
+			
+		        <div id="alert"></div>
+			
+				<div class="row">
+					<div class="input-field col s3">
+						<i class="material-icons prefix">account_circle</i> 
+						<input id="nome" type="text" class="validate" name="nome" required="required"> 
+						<label for="nome">Nome da Empresa</label>
+           	            <span id="error-nome" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+			        </div>
+					<div class="input-field col s3">
+						<i class="material-icons prefix">phone</i> 
+						<input id="contato" type="tel" class="validate" name="contato" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" required="required"> 
+						<label for="contato">Telefone</label>
+                        <span id="error-contato" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+			        </div>
+					<div class="input-field col s4">
+						<i class="material-icons prefix">email</i> 
+						<input id="email" type="email" class="validate" name="email" required="required"> 
+						<label for="email">Email</label>
+                        <span id="error-email" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+			        </div>
+			        <div class="input-field col s2">
+					    <button class="btn waves-effect waves-light" name="action">Salvar
+					    	<i class="material-icons right">save</i>
+						</button>
+					</diV>
+				</div>
+
+			</form>
+		</div>
+		<!-- DATATABLE -->
+		
+		<table id="table-empresa" class="display nowrap" style="width:100%">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Nome</th>
+		      <th scope="col">Contato</th>
+		      <th scope="col">Email</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody style="cursor: pointer">
+	          <tr th:each="e : ${empresas}" th:onclick="'location.href = \'' + @{/empresas/{id}(id=${e.idEmpresa})} + '\''">
+	              <td th:text="${e.idEmpresa}"></td>
+	              <td th:text="${e.nome}"></td>
+	              <td th:text="${e.contato}"></td>
+	              <td th:text="${e.email}"></td>
+	          </tr>
+          </tbody>
+		</table>
+	</div>
+
+<script th:src="@{/js/empresas.js}" th:fragment="js"></script>
+</body>
+</html>

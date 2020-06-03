@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="" layout:fragment="corpo">
+		<div class="row">
+		
+		<div id="loader-form" class="pre-load"></div>
+		  
+		<h3 class="header">CADASTRO / ENVIO DE EMPENHOS</h3>
+		<div id="mostraCadastro" style="display:none;" >
+			<form action="#" id="form-empresa" class="col s12">
+			<div id="alert"></div>
+			
+				<div class="row">
+					<div class="input-field col s3">
+						<i class="material-icons prefix">account_circle</i> 
+						<input id="nomeEmpresa" type="text" class="validate" name="nome" required="required"> 
+						<label for="nomeEmpresa">Nome da Empresa</label>
+           	            <span id="error-nome" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+			        </div>
+					<div class="input-field col s3">
+						<i class="material-icons prefix">phone</i> 
+						<input id="contato" type="tel" class="validate" name="contato" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" required="required"> 
+						<label for="contato">Telefone</label>
+                        <span id="error-contato" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+			        </div>
+					<div class="input-field col s4">
+						<i class="material-icons prefix">email</i> 
+						<input id="email" type="email" class="validate" name="email" required="required"> 
+						<label for="email">Email</label>
+                        <span id="error-email" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+			        </div>
+			        <div class="input-field col s2">
+					    <button class="btn waves-effect waves-light" name="action">Salvar
+					    	<i class="material-icons right">save</i>
+						</button>
+					</diV>
+				</div>
+		</form>
+		</div>
+		<div class="input-field col s3 ">
+			 <label>
+		        <input type="checkbox" checked="checked" id="inputCadastro" />
+		        <span>Empresa cadastrada</span>
+		      </label>
+	    </div>
+	    <form id="form-empenho" enctype="multipart/form-data" th:object="${empenho}">
+				<div class="input-field col s4 ">
+					<div class="" id="">
+						<div class="red-text">
+							<select id="search1" class="js-example-basic-single autocomplete" name="idEmpresa" th:field="*{empresa}" required>
+								<option value="" selected>Selecione a Empresa</option>
+								<option  th:each="empresa : ${empresas}" th:value="${empresa.idEmpresa}" th:text="${empresa.nome}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="input-field col s5">
+					<i class="material-icons prefix">email</i> 
+					<input id="email2"	type="text" class="validate" name="email"> 
+					<span id="error-email2" class="helper-text" data-error="Selecione a empresa" data-success="OK"></span>
+					
+				</div>
+				
+				<div class="input-field col s3">
+					<i class="material-icons prefix">colorize</i>
+					<input id="numeroEmpenho" type="text" class="validate" data-length="12" th:field="*{numeroEmpenho}" required> 
+					<label for="numeroEmpenho">Numero do Empenho</label>
+                    <span id="error-numeroEmpenho" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">attach_money</i>
+					<input id="valorTotal" type="text" class="validate" th:field="*{valorTotal}" required>
+					<label for="valorTotal">Valor</label>
+                    <span id="error-valorTotal" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">arrow_forward</i>
+					<input id="destino" type="text" class="validate" th:field="*{destino}" required> 
+					<label for="destino">Destino / Verba</label>
+                    <span id="error-destino" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="file-field input-field col s3">
+					<div class="btn">
+						<span>File</span> 
+						<input type="file" id="file" name="file" required>
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+	                    <span id="error-file" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+					</div>
+				</div>
+				<div class="input-field col s4 right">
+					<button id="cadastrar" class="btn waves-effect waves-light right" type="button" name="action">Cadastrar Somente
+				    	<i class="material-icons right">send</i>
+				 	 </button>		
+			 	 </div>	
+				
+		
+				<div class="input-field col s12">
+					<i class="material-icons prefix">mode_edit</i>
+					<textarea id="msgComplementar" name="msgComplementar" class="materialize-textarea"></textarea>
+					<label for="msgComplementar">Mensagem complementar no e-mail:</label>
+				</div>
+				<div class="input-field col s5 right">
+				<button class="btn waves-effect waves-light right" type="submit" name="action">Cadastrar & Enviar para Empresa
+			    	<i class="material-icons right">send</i>
+			 	 </button>	
+			 	 </div>
+ 	 	</form>
+		</div>
+		
+		<div class="fixed-action-btn">
+		  <a id="menu" class="waves-effect waves-light btn btn-floating" ><i class="material-icons">help_outline</i></a>
+		</div>
+		
+		  <!-- Tap Target Structure -->
+		  <div class="tap-target teal lighten-2" data-target="menu">
+		    <div class="tap-target-content">
+		      <h5 style="text-align: center;">AJUDA</h5>
+		      <p style="text-align: center;">Certifique-se de que a empresa esteja selecionada, juntamente com os campos : Numero do Empenho, Valor, Destino e file preenchidos. 	Para somente salvar os dados clique em : Cadastro somente,  para junto ao salvar enviar o empenho a empresa clique em : Cadastrar e enviar para a empresa</p>
+		    
+		    </div>
+		  </div>
+		
+</div>	
+	<script th:src="@{/js/adicionaEmpenho.js}" th:fragment="js"></script>
+	<script th:src="@{/js/empresas.js}" th:fragment="js"></script>
+</body>
+</html>

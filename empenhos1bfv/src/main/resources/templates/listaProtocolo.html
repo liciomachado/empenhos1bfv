@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="" layout:fragment="corpo">
+		<div class="row">
+
+			<h3 class="header">PROTOCOLAR NOTAS</h3>
+	
+			<div id="loader-form" class="pre-load"></div>
+		
+		</div>
+		<!-- DATATABLE -->
+		<form id="protocolar" method="POST">
+		<table class="display nowrap" style="width: 100%">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Nº Empenho</th>
+					<th scope="col">Empresa</th>
+					<th scope="col">Valor</th>
+					<th scope="col">Data de emissão</th>
+					<th scope="col">Recebido</th>
+					<th scope="col">NF</th>
+					<th scope="col">Destino</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="nota : ${notasProtocolar}">
+				 <td><a th:href="@{/empenho/pdf/{id} (id=${nota.empenho.idEmpenho}) }"
+						target="_blank" class="tooltipped" data-position="top"
+						data-tooltip="Visualizar empenho" th:text="${nota.empenho.numeroEmpenho}"></a></td>
+                 <td th:text="${nota.empenho.empresa.nome}"></td>
+                 <td th:text="${nota.valorTotal}"></td>
+      			 <td th:text="${nota.dataEmissao}"></td>
+      			 <td th:text="${nota.dataRecebido}"></td>
+    			 <td th:text="${nota.numNota}"></td>
+    			 <td th:text="${nota.empenho.destino}"></td>
+      			 <td><p>
+				      <label>
+				        <input type="checkbox" name="checkId[]" th:value="${nota.idNotaFiscal}" />
+				        <span></span>
+				      </label>
+				    </p>
+			    </td>
+                </tr>
+		</table>
+		
+		<div class="input-field col s4 right">
+			<button class="btn waves-effect waves-light right" type="submit" >Protocolar
+		    	<i class="material-icons right">send</i>
+		 	 </button>		
+	 	 </div>	
+	 	 <div class="input-field col s4 right">
+			<select class="selectProtocolo" name="secao">
+		      <option value="" disabled selected>Escolha o destino</option>
+		      <option th:each="s : ${secoes}" th:value="${s.idSecao}" th:text="${s.nomeSecao}"></option>
+		    </select>	
+		    <label>Selecione o destino</label>	 	 
+	 	 </div>	
+	 	</form>
+		
+	</div>
+<script th:src="@{/js/listaProtocolo.js}" th:fragment="js"></script>
+</body>
+</html>

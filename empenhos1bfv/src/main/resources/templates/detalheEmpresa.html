@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="" layout:fragment="corpo">
+		<div class="row">
+		
+			<h3 class="header"><span th:text="${empresa.nome}"/></h3>
+				
+				<span class="box2"> 
+					<h4>Total Empenhado: </br> R$ <span th:text="${valorTotal}"/></h4>
+				</span>
+				<span class="box2"> 
+					<h4>Tempo médio de entrega: </br> <span th:text="${tempoMedio}"/> dias</h4>
+				</span>
+				
+			<p>E-mail: <span th:text="${empresa.email}"/></p>
+			<p>Contato: <span th:text="${empresa.contato}"/></p>
+			<p>CNPJ: <span th:text="${empresa.cnpj}"/></p>
+		
+			<form th:action="@{/empresas/saveobs}" method="post" th:object="${observacao}">
+				<div class="input-field col s10">
+					<input type="hidden" id="id" th:field="*{empresa}"/>
+					<i class="material-icons prefix">mode_edit</i>
+					<textarea id="textarea1" class="materialize-textarea" th:field="*{observacao}"></textarea>
+					<label for="textarea1">Mensagem complementar:</label>
+				</div>
+				<div class="input-field col s2 right">
+				<button class="btn waves-effect waves-light right" type="submit" name="action">Salvar
+			    	<i class="material-icons right">send</i>
+			 	 </button>	
+			 	 </div>
+ 	 		</form>
+		
+			<!-- DATATABLE -->
+			<table class="responsive-table highlight">
+			<thead>
+	          <tr>
+	              <th>Nome</th>
+	              <th>Observação</th>
+	              <th>Data</th>
+	          </tr>
+       		 </thead>
+			 <tbody>
+		          <tr th:each="obs : ${obsEmpresa}">
+   		              <td th:text="${obs.usuario.nome}"></td>
+		              <td th:text="${obs.observacao}"></td>
+		              <td th:text="${#temporals.format(obs.dataObs, 'dd-MM-yyyy')}"></td>
+	              </tr>
+			</table>
+			
+		<table id="table-empresa" class="display nowrap">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Nº Empenho</th>
+		      <th scope="col">Empresa</th>
+		      <th scope="col">Destino</th>
+		      <th scope="col">Valor</th>
+		      <th scope="col">Saldo</th>
+		      <th scope="col">Enviado</th>
+		    </tr>
+		  </thead>
+		  <tbody style="cursor: pointer">
+	          <tr th:each="emp : ${empenhos}" th:onclick="'location.href = \'' + @{/empenho/{id}(id=${emp.idEmpenho})} + '\''">
+	              <td><a th:href="@{/empenho/pdf/{id} (id=${emp.idEmpenho}) }"
+						target="_blank" class="tooltipped" data-position="top"
+						data-tooltip="Visualizar empenho" th:text="${emp.numeroEmpenho}"></a></td>
+	              <td th:text="${emp.empresa.nome}"></td>
+	              <td th:text="${emp.destino}"></td>
+	              <td th:text="${emp.valorTotal}"></td>
+	              <td th:text="${emp.saldo}"></td>
+	              <td th:text="${emp.dataEmpenho}"></td>
+	          </tr>
+          </tbody>
+		</table>
+		    
+		</div>
+	</div>
+<script th:src="@{/js/empresas.js}" th:fragment="js"></script>
+</body>
+</html>

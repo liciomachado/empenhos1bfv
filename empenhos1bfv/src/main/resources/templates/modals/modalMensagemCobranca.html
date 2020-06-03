@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<!-- MODAL MENSAGEM COBRANÇA -->
+<div id="modalEmail" class="modal">
+  <div class="modal-content">
+    <h4>ATENÇÃO</h4>
+    <p>Deseja realmente enviar a mensagem automática de cobrança ?</p>
+	<form  method="post" id="modalMSGautomatica">
+  		<div class="input-field col">
+			<i class="material-icons prefix">mode_edit</i>
+			<input type="hidden" name="idEmpenho" th:value="${empenho.idEmpenho}">
+			<textarea id="textarea2" class="materialize-textarea" name="msgComplementar"></textarea>
+			<label for="textarea2">Se sim, adicione uma mensagem complementar</label>
+		</div>
+  </div>
+  <div class="modal-footer">
+  	
+	    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+	    <button class="btn waves-effect waves-light red" name="action">Confirmar
+	    	<i class="material-icons right">report_problem</i>
+		</button>
+	</form>
+  </div>
+</div>
+</body>

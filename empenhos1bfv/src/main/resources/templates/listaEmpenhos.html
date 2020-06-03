@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="" layout:fragment="corpo">
+		<div class="row">
+
+		<h1 class="header">Empenhos</h1>
+		<form method="post"><button class="btn waves-effect waves-light grey darken-3" name="action"value="todos">Todos</button>
+			<button class="btn waves-effect waves-light" name="action" value="quitados">Quitados</button>
+			<button class="btn waves-effect waves-light amber" name="action" value="pendentes">Pendentes</button>
+			<button class="btn waves-effect waves-light deep-orange" name="action" value="vencidos">Vencidos</button>
+			<button class="btn waves-effect waves-light blue-grey" name="action" value="rp">Restos a pagar</button>
+		</form>
+		
+		</div>
+		<!-- DATATABLE -->
+		
+		<table id="table-empenhos" class="display nowrap">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Nº Empenho</th>
+		      <th scope="col">Empresa</th>
+		      <th scope="col">Destino</th>
+		      <th scope="col">Valor</th>
+		      <th scope="col">Saldo</th>
+		      <th scope="col">Enviado</th>
+		    </tr>
+		  </thead>
+		  <tbody style="cursor: pointer">
+	          <tr th:each="emp : ${empenhosPendentes}" th:onclick="'location.href = \'' + @{/empenho/{id}(id=${emp.idEmpenho})} + '\''">
+	              <td><a th:href="@{/empenho/pdf/{id} (id=${emp.idEmpenho}) }"
+						target="_blank" class="tooltipped" data-position="top"
+						data-tooltip="Visualizar empenho" th:text="${emp.numeroEmpenho}"></a></td>
+	              <td th:text="${emp.empresa.nome}"></td>
+	              <td th:text="${emp.destino}"></td>
+	              <td th:text="${emp.valorTotal}"></td>
+	              <td th:text="${emp.saldo}"></td>
+	              <td th:text="${emp.dataEmpenho}"></td>
+	            
+              </tr>
+		</table>
+	</div>
+
+<script th:src="@{/js/empenhos.js}" th:fragment="js"></script>
+</body>
+</html>

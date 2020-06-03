@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<!-- MODAL EXCLUSAO -->
+<div id="modalEditEmpenho" class="modal">
+  <div class="modal-content">
+    <h4>ATENÇÃO</h4>
+    <p>Deseja realmente excluir esta nota fiscal ?</p>
+  </div>
+  <div class="modal-footer">
+  	<form  method="post" id="modalExclusao">
+  		<input type="hidden" name="idNotaFiscal" id="idNotaFiscal" value="">
+	    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+	    <button class="btn waves-effect waves-light red" name="action">Confirmar
+	    	<i class="material-icons right">report_problem</i>
+		</button>
+	</form>
+  </div>
+</div>
+</body>

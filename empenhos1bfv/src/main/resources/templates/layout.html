@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">	<link type="text/css" rel="stylesheet" th:href="@{/materialize/css/materialize.min.css}" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" th:href="@{/css/estilos.css}" />
+	<link type="text/css" rel="stylesheet" th:href="@{/css/loader.css}" />
+	<link type="text/css" rel="stylesheet" th:href="@{/materialize/select2-materialize.css}" />
+	<link type="text/css" rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" /> <!-- DATATABLES -->
+	<link rel="stylesheet" th:href="@{/select2/dist/css/select2.min.css}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="shortcut icon" th:href="@{/img/iconOM.png}" />
+	<title>Empenhos 1Bfv</title>
+</head>
+<body>
+<header>
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a href="#!">Sobre</a></li>
+			<li><a href="#!">Conta</a></li>
+			<li class="divider"></li>	
+			<li><a th:href="@{/logout}">Sair</a></li></form>
+		</ul>
+		<nav>
+			<div class="nav-wrapper blue-grey darken-4">
+				<a href="/" class="brand-logo left"><i class="material-icons prefix"><img src="/img/iconOM.png"
+					width="40" height="40"></i>Controle de Empenhos 1º B Fv</a>
+
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+
+					<li>
+						<div class="row">
+							<div class="col s12 ">
+								<div class="row" id="topbarsearch">
+									<div class="input-field col s12 red-text">
+										<form th:action="@{/empenho/redirect}" method="post">
+										<select id="search" class="js-example-basic-single autocomplete" name="idEmpenho" onchange="this.form.submit()">
+											<option value="">Digite o empenho</option>
+											<option  th:each="emp : ${empenhosNavbar}" th:value="${emp.idEmpenho}" th:text="${emp.numeroEmpenho}"></option>
+										</select>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li><a class="dropdown-trigger" href="#!"
+						data-target="dropdown1"><i class="material-icons left">assignment_ind</i>
+							<span sec:authentication="name"></span>
+						<i class="material-icons right">arrow_drop_down</i></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+</header>
+
+<main role="main" class="container">
+    <div layout:fragment="corpo">
+        <div>conteudo principal das páginas</div>
+    </div>
+</main>
+
+<footer id="contato" class="footer">
+	<address>
+		<strong>1º Batalhão Ferroviario - Lages / SC</strong><br> 5ª RM -
+		CMS <br> (49) 3251-9500 <br>
+	</address>
+</footer>
+<!-- JS-->
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/materialize/js/materialize.min.js}"></script>
+<script type="text/javascript" th:src="@{/materialize/select2-materialize.js}"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> <!-- DATATABLES -->
+
+<script th:src="@{/select2/dist/js/select2.min.js}"></script>
+<script th:src="@{/js/jquery.mask.min.js}"></script>
+<script type="text/javascript">
+		$(".dropdown-trigger").dropdown();
+		$('#valorTotal').mask('###0.00', {reverse: true});
+		$("#contato").mask("(00) 0000-00009")
+		
+		$(document).ready(function() {
+		    $('.js-example-basic-single').select2();
+		    
+		    $('.datepicker').datepicker();
+
+		    $('#numeroEmpenho').characterCounter();
+		    $('#chavedeacesso').characterCounter();
+
+		    $('#table-empresa').DataTable();
+
+		});
+		//DEIXANDO TEXTOS EM CAIXA ALTA
+		jQuery(document).ready(function() {
+			
+			jQuery('#nomeEmpresa').keyup(function() {
+				$(this).val($(this).val().toUpperCase());
+			});
+			jQuery('#numeroEmpenho').keyup(function() {
+				$(this).val($(this).val().toUpperCase());
+			});
+			
+			jQuery('#destino').keyup(function() {
+				$(this).val($(this).val().toUpperCase());
+			});
+		});
+		
+</script>
+
+<!-- 	MEUS JS -->
+<script th:replace=":: js"></script>
+</body>
+</html>

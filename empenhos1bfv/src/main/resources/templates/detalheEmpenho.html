@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="" layout:fragment="corpo">
+
+	<div style="margin-left: 5%; margin-right: 5%;">
+	<div style="margin-left: 5%; margin-right: 5%;">
+	
+	<div id="loader-form" class="pre-load"></div>
+	
+		<h1 style="text-align: center;"><span th:text="${empenho.numeroEmpenho}"/></h1>
+		
+		<div th:if="${empenho.etapa <= 3}">
+			<div id="contentDetalheEmpenhoNaoEntregue">
+				<img src="../img/document.png" width="25" height="25"
+					style="float: left;" class="d-inline-block align-top" alt="">
+			 	<img src="../img/envelope.png" width="30" height="30"
+					style="margin-left: 20%" class="d-inline-block align-top" alt="">
+				<img src="../img/shipped.png" width="30" height="30"
+					style="margin-left: 20%;" class="d-inline-block align-top" alt="">
+				<img src="../img/check1.png" width="30" height="27"
+					style="margin-left: 20%;" class="d-inline-block align-top" alt="">
+				<img src="../img/money.png" width="30" height="27"
+					style="float: right;" class="d-inline-block align-top" alt="">
+			</div>
+		</div>
+		<div th:if="${empenho.etapa == 4}">
+			<div id="contentDetalheEmpenhoEntregue">
+				<img src="../img/document.png" width="25" height="25"
+					style="float: left;" class="d-inline-block align-top" alt=""><img
+					src="../img/envelope.png" width="30" height="30"
+					style="margin-left: 20%" class="d-inline-block align-top" alt="">
+				<img src="../img/shipped.png" width="30" height="30"
+					style="margin-left: 20%;" class="d-inline-block align-top" alt="">
+				<img src="../img/check1.png" width="30" height="27"
+					style="margin-left: 20%;" class="d-inline-block align-top" alt="">
+				<img src="../img/money.png" width="30" height="27"
+					style="float: right;" class="d-inline-block align-top" alt="">
+			</div>
+		</div>
+		<div th:if="${empenho.etapa == 5 || empenho.etapa == 6}">
+			<div id="contentDetalheEmpenhoConcluido">
+				<img src="../img/document.png" width="25" height="25"
+					style="float: left;" class="d-inline-block align-top" alt=""> 
+				<img src="../img/envelope.png" width="30" height="30"
+					style="margin-left: 20%" class="d-inline-block align-top" alt="">
+				<img src="../img/shipped.png" width="30" height="30"
+					style="margin-left: 20%;" class="d-inline-block align-top" alt="">
+				<img src="../img/check1.png" width="30" height="27"
+					style="margin-left: 20%;" class="d-inline-block align-top" alt="">
+				<img src="../img/money.png" width="30" height="27"
+					style="float: right;" class="d-inline-block align-top" alt="">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s3"><p style="float: left;">Cadastrado:<br/><span th:text="${#temporals.format(empenho.dataEmpenho, 'dd-MM-yyyy')}"/></p></div>
+			<div class="col s2"><p style="margin-left: -30%;">Enviado:<br/><span th:text="${#temporals.format(empenho.dataEmpenho, 'dd-MM-yyyy')}"/></p></div>
+			<div th:if="${!not #lists.isEmpty(empenho.notasFiscais)}">
+				<div class="col s3"><p>Transporte:</p></div>
+				<div class="col s2"><p>Recebido:</p></div>
+				<div class="col s2"><p style="float: right;">Pagamento:</p></div>
+			</div>
+			<div th:if="${not #lists.isEmpty(empenho.notasFiscais)}">
+				<div class="col s3"><p>Transporte:<br/><span th:text="${#temporals.format(empenho.notasFiscais[0].dataEmissao, 'dd-MM-yyyy')}"/></p></div>
+				<div class="col s2"><p>Recebido:<br/><span th:text="${#temporals.format(empenho.notasFiscais[0].dataRecebido, 'dd-MM-yyyy')}"/></p></div>
+				<div class="col s2"><p style="float: right;"> Pagamento:<br/><span th:text="${#temporals.format(empenho.notasFiscais[0].dataProtocolado, 'dd-MM-yyyy')}"/></p></div>
+			</div>
+			
+		</div>
+	</div>
+	 <div class="row">
+	 <!-- FIELDSET EMPENHO -->
+	 <fieldset class="border p-2" id="empenho">
+		<legend class="w-auto">Empenho </legend>
+		
+			<form enctype="multipart/form-data" th:object="${empenho}">
+				<div class="input-field col s3">
+					<i class="material-icons prefix">colorize</i>
+					<input id="numeroEmpenho" type="text" class="validate" data-length="12" th:field="*{numeroEmpenho}" disabled> 
+					<label for="numeroEmpenho">Numero do Empenho</label>
+		                  <span id="error-numeroEmpenho" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">attach_money</i>
+					<input id="valorTotal2" type="text" class="validate" th:field="*{valorTotal}" disabled>
+					<label for="valorTotal2">Valor</label>
+				</div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">arrow_forward</i>
+					<input id="destino" type="text" class="validate" th:field="*{destino}" disabled> 
+					<label for="destino">Destino / Verba</label>
+				</div>
+				<div class="input-field col s1">
+					<a th:href="@{/empenho/pdf/{id} (id=${empenho.idEmpenho}) }" target="_blank" class="tooltipped" data-position="top" data-tooltip="Visualizar empenho">
+					<i class="material-icons prefix">visibility</i>
+					</a>
+				</div>
+				<div class="input-field col s1">
+					<a href="#modalEditEmpenho" class="tooltipped modal-trigger" data-position="top" data-tooltip="Editar/excluir empenho">
+					<i class="material-icons prefix">edit</i>
+					</a>
+				</div>
+				<div class="input-field col s1">	
+					<a href="#modalEmail" class="tooltipped modal-trigger" data-position="top" data-tooltip="Cobrança automatica" th:id="${empenho.idEmpenho}">
+					<i class="material-icons prefix icon-red">email</i>
+					</a>
+				</div>
+				
+			</form>
+	</fieldset>
+	<!-- FIELDSET EMPRESA -->
+	<fieldset class="border p-2" id="empresa">
+		<legend class="w-auto">Empresa </legend>
+			<form enctype="multipart/form-data" th:object="${empenho}">
+				<div class="input-field col s4">
+					<i class="material-icons prefix">account_circle</i> 
+					<input id="nomeEmpresa" type="text" class="validate" th:field="*{empresa.nome}" required="required" disabled> 
+					<label for="nomeEmpresa">Nome da Empresa</label>
+          	            <span id="error-nome" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+		        </div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">phone</i> 
+					<input id="contato" type="tel" class="validate" th:field="*{empresa.contato}" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" required="required" disabled> 
+					<label for="contato">Telefone</label>
+                       <span id="error-contato" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+		        </div>
+				<div class="input-field col s5">
+					<i class="material-icons prefix">email</i> 
+					<input id="email" type="email" class="validate" th:field="*{empresa.email}" required="required" disabled> 
+					<label for="email">Email</label>
+                       <span id="error-email" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+		        </div>
+			</form>
+	</fieldset>
+	<!-- FIELDSET NOTAFISCAL -->
+	<fieldset class="border p-2" id="notas">
+		<legend class="w-auto">Notas Fiscais </legend>
+			
+		 <table class="highlight responsive-table table">
+	        <thead >
+	          <tr>
+	              <th>Chave de acesso</th>
+	              <th>Nº nota</th>
+	              <th>Data de emissão</th>
+	              <th>Data recebido</th>
+	              <th>Data Protocolado</th>
+	              <th>Valor total</th>
+	              <th>Por</th>
+	              <th></th>
+	              <th></th>
+	          </tr>
+	        </thead>
+			<tbody>
+	           <tr th:each="n : ${empenho.notasFiscais}">
+	           <td><a th:href="@{http://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx?tipoConteudo=XbSeqxE8pl8%3D&tipoConsulta=completa&nfe={chave} (chave=${n.chaveAcesso}) }"
+							target="_blank" th:text="${n.chaveAcesso}"></td>
+	            <td th:text="${n.numNota}"></td>
+	            <td th:text="${#temporals.format(n.dataEmissao, 'dd-MM-yyyy')}"></td>
+	            <td th:text="${#temporals.format(n.dataRecebido, 'dd-MM-yyyy')}"></td>
+	            <td th:text="${#temporals.format(n.dataProtocolado, 'dd-MM-yyyy')}"></td>
+	            <td th:text="${n.valorTotal}"></td>
+	            <td th:text="${n.usuario.nome}"></td>
+		            <td><a href=""><i class="material-icons prefix">edit</i></a></td>
+		            <td><a href="#modal1" class="modal-trigger modalDelete" th:id="${n.idNotaFiscal}"><i class="material-icons prefix icon-red">delete</i></a></td>
+	          </tr>
+	       	</tbody>
+      	</table>
+      	      	
+      	<div class="form-group" id="txtNF" style="display:none;">
+			<form id="form-nota" th:object="${notafiscal}" th:action="@{/notafiscal/savenota}" method="POST">
+				<div class="input-field col s5">
+					<i class="material-icons prefix">business</i>
+					<input id="chavedeacesso" type="text" class="validate" data-length="44" required th:field="*{chaveAcesso}"> 
+					<label for="chavedeacesso">Chave de Acesso</label>
+				</div>
+				<div class="input-field col s2">
+						<i class="material-icons prefix">format_list_numbered</i>
+						<input id="numeroNota" type="number" class="validate" required th:field="*{numNota}">
+						<label for="numeroNota">Nº nota</label>
+				</div>
+				<div class="input-field col s3">
+						<i class="material-icons prefix">date_range</i>
+						<input id="data" type="date" class="validate" name="valor" required th:field="*{dataEmissao}">
+						<label for="data">Data de emissão</label>
+				</div>
+				<div class="input-field col s2">
+					<i class="material-icons prefix">attach_money</i>
+					<input id="total" type="text" class="validate" required th:field="*{valorTotal}">
+					<label for="total">Valor</label>
+				</div>
+				<input type="hidden" id="id" th:field="*{empenho}"/>
+				<div class="input-field col s12 right">
+					<button class="btn waves-effect waves-light right" type="submit">Cadastrar Nota fiscal
+				    	<i class="material-icons right">send</i>
+				 	 </button>	
+			 	</div>
+	 	 	</form>
+ 	 	</div>
+ 	 	<div class="input-field col s12" style="text-align: right; margin-top: 5px;">
+			<button id="adicionaNF" type="button" class="btn-floating  waves-effect waves-light blue" aria-label="Left Align">
+  					<a class=""><i class="material-icons" id="add">add</i></a>
+			</button>
+		</div>
+	</fieldset>
+	<!-- FIELDSET OBSERVAÇOES -->
+	<fieldset class="border p-2" id="observacoes">
+		<legend class="w-auto">Observações </legend>
+		
+			<table class="responsive-table highlight">
+			<thead>
+	          <tr>
+	              <th>Nome</th>
+	              <th>Observação</th>
+	              <th>Data</th>
+	          </tr>
+       		 </thead>
+			 <tbody>
+		          <tr th:each="obs : ${empenho.observacoes}">
+   		              <td th:text="${obs.usuario.nome}"></td>
+		              <td th:text="${obs.observacao}"></td>
+		              <td colspan="2" th:text="${#temporals.format(obs.dataObs, 'dd-MM-yyyy')}"></td>
+	              </tr>
+              </tbody>
+			</table>
+
+			<div class="form-group" id="txtObs" style="display:none;">
+				<form th:action="@{/empenho/saveobs}" method="post" th:object="${observacao}" >
+				<input type="hidden" id="id" th:field="*{empenho}"/>
+					<div class="input-field col s10">
+						<i class="material-icons prefix">mode_edit</i>
+						<textarea id="textarea1" class="materialize-textarea" th:field="*{observacao}" required></textarea>
+						<label for="textarea1">Adicionar Observação</label>
+					</div>
+					<div class="input-field col s2 right">
+					<button class="btn waves-effect waves-light right" type="submit" name="action">Salvar
+				    	<i class="material-icons right">send</i>
+				 	 </button>	
+				 	 </div>
+	 	 		</form>
+ 	 		</div>
+ 	 		<div style="text-align: right;margin-top: 5px;">
+ 				<a href="#modalPA" class="modal-trigger" th:id="${empenho.idEmpenho}"><button class="btn waves-effect waves-light">Solicitar processo administrativo</button></a>
+ 	 			<button id="adicionaObs" type="button" class="btn-floating  waves-effect waves-light blue" aria-label="Left Align">
+	  					<i class="material-icons" id="add">add</i></a>
+				</button>
+			</div>
+	</fieldset>
+	</div>
+</div>
+<!-- MODAL EXCLUSAO -->
+<div th:insert="modals/modalExclusaoNF.html"></div>
+
+<!-- MODAL ENVIO DE MENSAGEM AUTOMATICA-->
+<div th:insert="modals/modalMensagemCobranca.html"></div> 
+
+<!-- MODAL PEDIDO DE PA-->
+<div th:insert="modals/modalPedidoPA.html"></div> 
+
+<!-- MODAL EDITAR EMPENHO-->
+<div th:insert="modals/modalEditarEmpenho.html"></div> 
+
+</div>
+<script th:src="@{/js/detalheEmpenho.js}" th:fragment="js"></script>
+</body>
+</html>

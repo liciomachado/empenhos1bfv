@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="" layout:fragment="corpo">
+		<div class="row">
+		
+		<div id="loader-form" class="pre-load"></div>
+		
+		<h3 class="header">CADASTRO DE NOTAS FISCAIS</h3>
+		<form id="form-nota" th:object="${notafiscal}" th:action="@{/notafiscal/savenota}" method="POST">
+			<div class="input-field col s4 ">
+				<div class="red-text">
+					<select id="search1" class="js-example-basic-single autocomplete" th:field="*{empenho}" required>
+						<option value="">Selecione o empenho</option>
+						<option  th:each="empenho : ${empenhos}" th:value="${empenho.idEmpenho}" th:text="${empenho.numeroEmpenho}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="input-field col s5">
+				<i class="material-icons prefix">copyright</i>
+				<input id="setEmpresa" type="text" disabled class="validate" name="empresaEmp"> 
+				<label for="setEmpresa"></label>
+			</div>
+			<div class="input-field col s3">
+					<i class="material-icons prefix">attach_money</i>
+					<input id="setValor" type="text" disabled class="validate" name="valorEmp">
+					<label for="setValor"></label>
+			</div>
+			<div class="input-field col s5">
+				<i class="material-icons prefix">business</i>
+				<input id="chavedeacesso" type="text" class="validate" data-length="44" required th:field="*{chaveAcesso}"> 
+				<label for="chavedeacesso">Chave de Acesso</label>
+			</div>
+			<div class="input-field col s2">
+					<i class="material-icons prefix">format_list_numbered</i>
+					<input id="numeroNota" type="number" class="validate" required th:field="*{numNota}">
+					<label for="numeroNota">Nº nota</label>
+			</div>
+			<div class="input-field col s3">
+					<i class="material-icons prefix">date_range</i>
+					<input id="data" type="date" class="validate" name="valor" required th:field="*{dataEmissao}">
+					<label for="data">Data de emissão</label>
+			</div>
+			<div class="input-field col s2">
+				<i class="material-icons prefix">attach_money</i>
+				<input id="valorTotal" type="text" class="validate" required th:field="*{valorTotal}">
+				<label for="valorTotal">Valor</label>
+			</div>
+			<div class="input-field col s12">
+				<i class="material-icons prefix">mode_edit</i>
+				<textarea id="obs" class="materialize-textarea" name="obs"></textarea>
+				<label for="obs">Observação:</label>
+			</div>
+			<input type="hidden" id="id" th:field="*{idNotaFiscal}"/>
+			<div class="input-field col s5 right">
+				<button class="btn waves-effect waves-light right" type="submit">Cadastrar Nota fiscal
+			    	<i class="material-icons right">send</i>
+			 	 </button>	
+		 	</div>
+ 	 	</form>
+	    
+		</div>
+	</div>	
+	<script th:src="@{/js/buscaEmpenho.js}" th:fragment="js"></script>
+</body>
+</html>

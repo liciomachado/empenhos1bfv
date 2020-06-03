@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="" layout:fragment="corpo">
+		<div class="row">
+			<a th:href="@{/novoempenho}"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="img/index/document.png">
+					<p>Cadastrar Empenho</p>
+				</span>
+			</a> 
+			<a th:href="@{/novanota}"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/nfeNew.png">
+					<p>Cadastrar Nota Fiscal</p>
+				</span>
+			</a> 
+			<a th:href="@{/protocolo}">
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/checklist.png">
+					<p>Protocolar</p>
+				</span>
+			</a> 
+			<a th:href="@{/empenhos}"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/hourglass.png">
+					<p>Empenhos</p>
+				</span>
+			</a> 
+			<a th:href="@{/notasfiscais}">  
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/success.png">
+					<p>Notas Fiscais</p>
+				</span>
+			</a> 
+			<a href="https://www.google.com/gmail/"  target="_blank"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/gmail2.png">
+					<p>Gmail</p>
+				</span>
+			</a> 
+			<a href="meusEmpenhos.jsp"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/file.png">
+					<p>Meus Empenhos</p>
+				</span>
+			</a> 
+			<a th:href="@{/minhasnotas}"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/gerency.png">
+					<p>Minhas Notas Fiscais</p>
+				</span>
+			</a> 
+			<a th:href="@{/protocolorecebido}">  
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/checklist2.png">
+					<p>Protocolos recebidos</p>
+				</span>
+			</a> 
+			<a th:href="@{/empresas/}"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/enterprise.png">
+					<p>Gerenciar Empresas</p>
+				</span>
+			</a> 
+			<a href="http://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx?tipoConsulta=completa&tipoConteudo=XbSeqxE8pl8=" target="_blank"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/nfe.png">
+					<p>Site NFE</p>
+				</span>
+			</a> 
+			<a href="configConta.jsp"> 
+				<span class="box"> 
+				<img alt="img" width="50" height="50" src="../img/index/settings.png">
+					<p>Conta</p>
+				</span>
+			</a> 
+			
+		</div>
+	</div>
+	
+	<script th:src="@{/js/empresas.js}" th:fragment="js"></script>
+	</body>
+</html>

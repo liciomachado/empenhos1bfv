@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+<link type="text/css" rel="stylesheet" th:href="@{/materialize/select2-materialize.css}" />
+<link th:href="@{css/styleLogin.css}" rel="stylesheet">
+<link rel="shortcut icon" href="img/iconOM.png" />
+</head>
+<body>
+	<div class="login">
+		<img src="img/user.png" class="usuario" width="100" height="100"
+			alt="">
+		<h1>Login</h1>
+		<form method="post" th:action="@{/login}">
+
+			<p>Usuario</p>
+			<input type="text" name="username" placeholder="Insira seu nome de usuario">
+
+			<p>Senha</p>
+			<input type="password" name="password" placeholder="Insira sua senha">
+			<div th:if="${alerta != null}" role="alert">
+			 	<input name="erroSenha" class="senhaincorreta" value="LOGIN E/OU SENHA INCORRETOS">
+			</div>
+			<input type="submit">
+			<a href="#" style="color: white; text-align: center;">Cadastre-se agora</a>
+		</form>
+	</div>
+</body>
+</html>
