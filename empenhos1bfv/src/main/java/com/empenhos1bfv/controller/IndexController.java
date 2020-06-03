@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -166,7 +167,18 @@ public class IndexController implements ErrorController {
 	@RequestMapping(value = "/novanota", method = RequestMethod.GET)
 	public ModelAndView adicionaNota(Notafiscal notafiscal) {
 		ModelAndView mv = new ModelAndView("adicionaNotaFiscal");
+		notafiscal.setIdNotaFiscal(0);
 		List<Empenho> empenhos = empenhoRepository.findAll();
+		mv.addObject("empenhos", empenhos);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/novanota/{id}", method = RequestMethod.GET)
+	public ModelAndView alteraNota(@PathVariable("id") int id,Notafiscal notafiscal) {
+		ModelAndView mv = new ModelAndView("adicionaNotaFiscal");
+		notafiscal =  notaFiscalRepository.findById(id).get();
+		List<Empenho> empenhos = empenhoRepository.findAll();
+		mv.addObject("notafiscal", notafiscal);
 		mv.addObject("empenhos", empenhos);
 		return mv;
 	}

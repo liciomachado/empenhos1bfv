@@ -6,16 +6,40 @@
 <!-- MODAL EXCLUSAO -->
 <div id="modalEditEmpenho" class="modal">
   <div class="modal-content">
-    <h4>ATENÇÃO</h4>
-    <p>Deseja realmente excluir esta nota fiscal ?</p>
+    <h4>Edição de empenho</h4>
   </div>
-  <div class="modal-footer">
-  	<form  method="post" id="modalExclusao">
-  		<input type="hidden" name="idNotaFiscal" id="idNotaFiscal" value="">
-	    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-	    <button class="btn waves-effect waves-light red" name="action">Confirmar
-	    	<i class="material-icons right">report_problem</i>
-		</button>
+  <div class="modal-content">
+  	<form  method="post" id="" th:object="${empenho}" th:action="@{/empenho/atualizaempenho}">
+  		<input type="hidden" name="idEmpenho" th:value="*{idEmpenho}">
+  		<div class="row">
+  				<div class="input-field col s4">
+					<i class="material-icons prefix">colorize</i>
+					<input id="numeroEmpenho" type="text" class="validate" data-length="12" th:field="*{numeroEmpenho}" required> 
+					<label for="numeroEmpenho">Numero do Empenho</label>
+                    <span id="error-numeroEmpenho" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s4">
+					<i class="material-icons prefix">attach_money</i>
+					<input id="valorTotal" type="text" class="validate" th:field="*{valorTotal}" required>
+					<label for="valorTotal">Valor</label>
+                    <span id="error-valorTotal" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s4">
+					<i class="material-icons prefix">arrow_forward</i>
+					<input id="destino" type="text" class="validate" th:field="*{destino}" required> 
+					<label for="destino">Destino / Verba</label>
+                    <span id="error-destino" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				 <button class="btn waves-effect waves-light right" name="action">Confirmar
+				    	<i class="material-icons right"></i>
+				</button>
+				
+				<button class="btn waves-effect waves-light red" name="action">Excluir empenho
+				    	<i class="material-icons right">report_problem</i>
+				</button>
+			    <a href="#!" class="modal-close waves-effect waves-green btn-flat right">Cancelar</a>
+				   
+		</div>
 	</form>
   </div>
 </div>

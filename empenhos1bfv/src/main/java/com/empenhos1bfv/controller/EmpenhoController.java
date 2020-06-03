@@ -144,6 +144,19 @@ public class EmpenhoController {
 		empenhoRepository.save(empenho);
 		return ResponseEntity.ok().build();
 	}
+	@PostMapping("/atualizaempenho")
+	public String atualizaEmpenho(	@RequestParam int idEmpenho,
+									@RequestParam String numeroEmpenho,
+									@RequestParam Double valorTotal,
+									@RequestParam String destino) {
+		Empenho empenho = empenhoRepository.findById(idEmpenho).get();
+		empenho.setNumeroEmpenho(numeroEmpenho);
+		empenho.setValorTotal(valorTotal);
+		empenho.setDestino(destino);
+		empenhoRepository.save(empenho);
+		return "redirect:/empenho/"+idEmpenho;
+	}
+	
 	@PostMapping("/functionjson")
 	public void functionJSON(@RequestParam String id, HttpServletResponse response) throws IOException {
 		if (id != null || id != "") {

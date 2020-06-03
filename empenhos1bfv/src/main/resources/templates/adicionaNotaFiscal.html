@@ -9,8 +9,9 @@
 		
 		<div id="loader-form" class="pre-load"></div>
 		
-		<h3 class="header">CADASTRO DE NOTAS FISCAIS</h3>
-		<form id="form-nota" th:object="${notafiscal}" th:action="@{/notafiscal/savenota}" method="POST">
+		<h3 class="header"><span th:text="${notafiscal.idNotaFiscal} == 0 ? 'CADASTRO DE NOTAS FISCAIS' : 'EDIÇÃO DE NOTAS FISCAIS'" /></h3>
+		<form id="form-nota" th:object="${notafiscal}" th:action="${notafiscal.idNotaFiscal == 0 } ? @{/notafiscal/savenota} : @{/notafiscal/editar}" method="POST">
+	  		<input type="hidden" th:field="*{idNotaFiscal}">
 			<div class="input-field col s4 ">
 				<div class="red-text">
 					<select id="search1" class="js-example-basic-single autocomplete" th:field="*{empenho}" required>
@@ -56,7 +57,7 @@
 			</div>
 			<input type="hidden" id="id" th:field="*{idNotaFiscal}"/>
 			<div class="input-field col s5 right">
-				<button class="btn waves-effect waves-light right" type="submit">Cadastrar Nota fiscal
+				<button class="btn waves-effect waves-light right" type="submit"><span th:text="${notafiscal.idNotaFiscal} == 0 ? 'CADASTRAR NOTA FISCAL' : 'SALVAR EDIÇÃO DE NOTA'" />
 			    	<i class="material-icons right">send</i>
 			 	 </button>	
 		 	</div>

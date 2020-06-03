@@ -74,6 +74,17 @@ public class NotaFiscalController {
 		
 		return "redirect:/empenho/"+nota.getEmpenho().getIdEmpenho();
 	}
+	@PostMapping("/editar")
+	public String editarNota(Notafiscal notafiscal) {
+		Notafiscal nota2 = notaFiscalRepository.findById(notafiscal.getIdNotaFiscal()).get();
+		nota2.setChaveAcesso(notafiscal.getChaveAcesso());
+		nota2.setNumNota(notafiscal.getNumNota());
+		nota2.setDataEmissao(notafiscal.getDataEmissao());
+		nota2.setValorTotal(notafiscal.getValorTotal());
+		notaFiscalRepository.save(nota2);
+		
+		return"redirect:/empenho/"+notafiscal.getEmpenho().getIdEmpenho();
+	}
 	
 	@PostMapping("/protocolar")
 	public ResponseEntity<?> doProtocolar(HttpServletRequest request,@Valid Secao secao, @AuthenticationPrincipal User u){
