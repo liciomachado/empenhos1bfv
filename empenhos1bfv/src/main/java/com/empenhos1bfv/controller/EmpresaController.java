@@ -83,9 +83,15 @@ public class EmpresaController {
 	@GetMapping("/{id}")
 	public ModelAndView detalheEmpresa(@PathVariable("id") int id, ObservacoesEmpresa observacao) {
 		observacao.setEmpresa(empresaRepository.findById(id).get());
-		double valorTotal = empresaRepository.getValorTotalPorEmpresa(id);
+		double valorTotal = 0;
+		if(empresaRepository.getValorTotalPorEmpresa(id) != null) {
+			valorTotal = empresaRepository.getValorTotalPorEmpresa(id);
+		}
+		int tempoMedio = 0;
+		if(empresaRepository.getTempoMedioPorEmpresa(id) != null){
+			tempoMedio = empresaRepository.getTempoMedioPorEmpresa(id);
+		}
 		DecimalFormat formatador = new DecimalFormat("0.00");
-		int tempoMedio = empresaRepository.getTempoMedioPorEmpresa(id);
 		Empresa empresa = empresaRepository.findById(id).get();
 		ModelAndView mv = new ModelAndView("detalheEmpresa");
 		List<Empenho> empenhos = empenhoRepository.findByEmpresa(id);
