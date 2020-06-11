@@ -161,8 +161,8 @@
 	            <td th:text="${#temporals.format(n.dataEmissao, 'dd-MM-yyyy')}"></td>
 	            <td th:text="${#temporals.format(n.dataRecebido, 'dd-MM-yyyy')}"></td>
 	            <td th:text="${#temporals.format(n.dataProtocolado, 'dd-MM-yyyy')}"></td>
-	            <td th:text="${n.valorTotal}"></td>
-	            <td th:text="${n.usuario.nome}"></td>
+	            <td><span th:text="${#numbers.formatDecimal(n.valorTotal, 0, 'POINT', 2, 'COMMA')}">10.00</span></td>
+				<td th:text="${n.usuario.nome}"></td>
 		            <td><a th:href="@{/novanota/{id} (id=${n.idNotaFiscal})}"><i class="material-icons prefix">edit</i></a></td>
 		            <td><a href="#modal1" class="modal-trigger modalDelete" th:id="${n.idNotaFiscal}"><i class="material-icons prefix icon-red">delete</i></a></td>
 	          </tr>

@@ -36,8 +36,8 @@
 						data-tooltip="Visualizar empenho" th:text="${emp.numeroEmpenho}"></a></td>
 	              <td th:text="${emp.empresa.nome}"></td>
 	              <td th:text="${emp.destino}"></td>
-	              <td th:text="${emp.valorTotal}"></td>
-	              <td th:text="${emp.saldo}"></td>
+	              <td>R$ <span th:text="${#numbers.formatDecimal(emp.valorTotal, 0, 'POINT', 2, 'COMMA')}">10.00</span></td>
+	              <td>R$ <span th:text="${#numbers.formatDecimal(emp.saldo, 0, 'POINT', 2, 'COMMA')}">10.00</span></td>
 	              <td th:text="${emp.dataEmpenho}"></td>
 	            
               </tr>
