@@ -3,7 +3,7 @@ $("#form-empresa").submit(function(evt){
 	
 	var empresa = {};
 	
-	empresa.nome = $("#nomeEmpresa").val();
+	empresa.nome = $("#nome").val();
 	empresa.contato = $("#contato").val();
 	empresa.email = $("#email").val();
 		
@@ -30,7 +30,8 @@ $("#form-empresa").submit(function(evt){
 			});
 			$("#alert")
 			.removeClass("alert alert-danger");		
-			M.toast({html: 'OK! Promoção cadastrada com sucesso', timeRemaining: 15000, displayLength: 10000, classes: 'green rounded'});
+			M.toast({html: 'OK! Empresa cadastrada com sucesso', timeRemaining: 15000, displayLength: 10000, classes: 'green rounded'});
+			setTimeout(function(){ location.reload(); }, 1000);
 		},
 		statusCode: {
 			422: function(xhr){
@@ -44,7 +45,7 @@ $("#form-empresa").submit(function(evt){
 		},
 		error: function(xhr){
 			console.log("> error: ",xhr.responseText);
-			M.toast({html: 'Não foi possivel salvar esta promocao', timeRemaining: 15000, displayLength: 10000, classes: 'red rounded'});
+			M.toast({html: 'Não foi possivel salvar esta empresa', timeRemaining: 15000, displayLength: 10000, classes: 'red rounded'});
 		},
 		complete: function(){
 			$("#loader-form").fadeOut(800, function(){

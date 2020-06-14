@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -58,24 +60,17 @@ public class EmpresaController {
 		return mv;
 	}
 	@PostMapping("/save")
-	public ResponseEntity<?> salvarEmpresa(@Valid Empresa empresa,BindingResult result){
+	public ResponseEntity<?> salvarEmpresa(Empresa empresa){
 		
-		if (result.hasErrors()) {
-			Map<String, String> errors = new HashMap<>();
-			for(FieldError error : result.getFieldErrors()) {
-				errors.put(error.getField(), error.getDefaultMessage());
-			}
-			return ResponseEntity.unprocessableEntity().body(errors);
-		}
 		log.info("Promocao {}",empresa.toString());
 		empresaRepository.save(empresa);
 		return ResponseEntity.ok().build();
 	}
 	@PostMapping("/saveobs")
-	public String salvarObservacaoEmpresa(@Valid ObservacoesEmpresa obsEmpresa){
+	public String salvarObservacaoEmpresa(@Valid ObservacoesEmpresa obsEmpresa, @AuthenticationPrincipal User u){
 		
 		obsEmpresa.setDataObs(LocalDate.now());
-		obsEmpresa.setUsuario(usuarioRepository.findById(1).get());
+		obsEmpresa.setUsuario(usuarioRepository.findByNome(u.getUsername()).get());
 		observacaoEmpresaRepository.save(obsEmpresa);
 		
 		return "redirect:/empresas/"+obsEmpresa.getEmpresa().getIdEmpresa();

@@ -26,7 +26,7 @@ import com.sun.istack.NotNull;
 public class Notafiscal {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idNotaFiscal;
 	
 	private int numNota;
