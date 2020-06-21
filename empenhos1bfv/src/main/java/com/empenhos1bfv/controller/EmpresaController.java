@@ -2,9 +2,7 @@ package com.empenhos1bfv.controller;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -15,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Empenho;
 import com.empenhos1bfv.model.Empresa;
 import com.empenhos1bfv.model.ObservacoesEmpresa;
+import com.empenhos1bfv.repository.EmpenhoDTORepository;
 import com.empenhos1bfv.repository.EmpenhoRepository;
 import com.empenhos1bfv.repository.EmpresaRepository;
 import com.empenhos1bfv.repository.ObservacaoEmpresaRepository;
@@ -46,10 +44,13 @@ public class EmpresaController {
 	UsuarioRepository usuarioRepository;
 	@Autowired
 	EmpenhoRepository empenhoRepository;
+	@Autowired
+	EmpenhoDTORepository dtoRepository;
+
 	
 	@ModelAttribute("empenhosNavbar")
-	public List<Empenho> getEmpenhos(){
-		return empenhoRepository.findAll();
+	public List<EmpenhoDTO> getEmpenhos() {
+		return dtoRepository.findAllWithoutFIle();
 	}
 	
 	@GetMapping("/")

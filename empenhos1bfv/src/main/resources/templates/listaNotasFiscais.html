@@ -34,7 +34,7 @@
 						data-tooltip="Visualizar empenho" th:text="${nota.empenho.numeroEmpenho}"></a></td>
 					<td th:text="${nota.empenho.empresa.nome}"></td>
 					<td th:text="${nota.empenho.destino}"></td>
-	             	<td>R$ <span th:text="${#numbers.formatDecimal(nota.valorTotal, 0, 'POINT', 2, 'COMMA')}">10.00</span></td>
+	             	<td><span th:text="${#numbers.formatDecimal(nota.valorTotal, 0, 'POINT', 2, 'COMMA')}">10.00</span></td>
 					<td th:text="${nota.empenho.dataEmpenho}"></td>
 					<td th:text="${nota.dataRecebido}"></td>
 					<td><a th:href="@{http://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx?tipoConteudo=XbSeqxE8pl8%3D&tipoConsulta=completa&nfe={chave} (chave=${nota.chaveAcesso}) }"

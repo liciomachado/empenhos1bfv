@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.empenhos1bfv.model.Empenho;
+import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Notafiscal;
 import com.empenhos1bfv.model.Observacoes;
 import com.empenhos1bfv.model.Protocolo;
 import com.empenhos1bfv.model.Secao;
 import com.empenhos1bfv.model.Usuario;
+import com.empenhos1bfv.repository.EmpenhoDTORepository;
 import com.empenhos1bfv.repository.EmpenhoRepository;
 import com.empenhos1bfv.repository.NotaFiscalRepository;
 import com.empenhos1bfv.repository.ObservacaoRepository;
@@ -50,10 +51,12 @@ public class NotaFiscalController {
 	SecaoRepository secaoRepository;
 	@Autowired
 	ObservacaoRepository obsRepository;
-	
+	@Autowired
+	EmpenhoDTORepository dtoRepository;
+
 	@ModelAttribute("empenhosNavbar")
-	public List<Empenho> getEmpenhos(){
-		return empenhoRepository.findAll();
+	public List<EmpenhoDTO> getEmpenhos() {
+		return dtoRepository.findAllWithoutFIle();
 	}
 	@PostMapping("/savenota")
 	public String saveNota(@Valid Notafiscal nota, BindingResult result, @AuthenticationPrincipal User u) throws IOException, ParseException {

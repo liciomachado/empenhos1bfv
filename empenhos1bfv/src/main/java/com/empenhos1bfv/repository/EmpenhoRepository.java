@@ -32,4 +32,5 @@ public interface EmpenhoRepository extends JpaRepository<Empenho, Integer> {
 	@Query(value="SELECT * FROM empenho where valor_total != saldo_utilizado and data_empenho <= DATE_SUB(now(), INTERVAL 30 DAY)", nativeQuery = true)
 	List<Empenho> findVencidos();
 	
+	
 }

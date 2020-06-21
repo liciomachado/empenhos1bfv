@@ -32,11 +32,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Empenho;
 import com.empenhos1bfv.model.Empresa;
 import com.empenhos1bfv.model.Notafiscal;
 import com.empenhos1bfv.model.Observacoes;
 import com.empenhos1bfv.model.Usuario;
+import com.empenhos1bfv.repository.EmpenhoDTORepository;
 import com.empenhos1bfv.repository.EmpenhoRepository;
 import com.empenhos1bfv.repository.EmpresaRepository;
 import com.empenhos1bfv.repository.NotaFiscalRepository;
@@ -63,10 +65,13 @@ public class EmpenhoController {
 	ObservacaoRepository obsRepository;
 	@Autowired
 	Mailer mailer;
+	@Autowired
+	EmpenhoDTORepository dtoRepository;
+
 	
 	@ModelAttribute("empenhosNavbar")
-	public List<Empenho> getEmpenhos(){
-		return empenhoRepository.findAll();
+	public List<EmpenhoDTO> getEmpenhos() {
+		return dtoRepository.findAllWithoutFIle();
 	}
 	
 	@PostMapping("/save")

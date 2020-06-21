@@ -24,12 +24,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Empenho;
 import com.empenhos1bfv.model.Empresa;
 import com.empenhos1bfv.model.Notafiscal;
 import com.empenhos1bfv.model.Protocolo;
 import com.empenhos1bfv.model.Secao;
 import com.empenhos1bfv.model.Usuario;
+import com.empenhos1bfv.repository.EmpenhoDTORepository;
 import com.empenhos1bfv.repository.EmpenhoRepository;
 import com.empenhos1bfv.repository.EmpresaRepository;
 import com.empenhos1bfv.repository.NotaFiscalRepository;
@@ -52,6 +54,9 @@ public class IndexController implements ErrorController {
 	ProtocoloRepository protocoloRepository;
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	@Autowired
+	EmpenhoDTORepository dtoRepository;
+
 
 	@GetMapping("/")
 	public ModelAndView home(Empenho empenho) throws IOException {
@@ -75,8 +80,8 @@ public class IndexController implements ErrorController {
 	}	
 	
 	@ModelAttribute("empenhosNavbar")
-	public List<Empenho> getEmpenhos() {
-		return empenhoRepository.findAll();
+	public List<EmpenhoDTO> getEmpenhos() {
+		return dtoRepository.findAllWithoutFIle();
 	}
 
 	@ModelAttribute("empresas")
@@ -92,29 +97,29 @@ public class IndexController implements ErrorController {
 	@RequestMapping("/empenhos")
 	public ModelAndView pendentes() {
 		ModelAndView mv = new ModelAndView("listaEmpenhos");
-		List<Empenho> empenhos = empenhoRepository.findAll();
+		List<EmpenhoDTO> empenhos = dtoRepository.findAllWithoutFIle();
 		mv.addObject("empenhosPendentes", empenhos);
 		return mv;
 	}
 	@PostMapping("/empenhos")
 	public ModelAndView filtroEmpenho(@RequestParam String action) {
 		ModelAndView mv = new ModelAndView("listaEmpenhos");
-		List<Empenho> empenhos = empenhoRepository.findAll() ;
+		List<EmpenhoDTO> empenhos = dtoRepository.findAllWithoutFIle();
 		switch (action) {
 		case "todos":
-			empenhos = empenhoRepository.findAll();
+			empenhos = dtoRepository.findAllWithoutFIle();
 			break;
 		case "quitados":
-			empenhos = empenhoRepository.findQuitados();
+			empenhos = dtoRepository.findQuitados();
 			break;
 		case "pendentes":
-			empenhos = empenhoRepository.findEmpenhosPendentes();
+			empenhos = dtoRepository.findEmpenhosPendentes();
 			break;
 		case "vencidos":
-			empenhos = empenhoRepository.findVencidos();
+			empenhos = dtoRepository.findVencidos();
 			break;
 		case "rp":
-			empenhos = empenhoRepository.findRestosAPagar();
+			empenhos = dtoRepository.findRestosAPagar();
 			break;
 		}
 		mv.addObject("empenhosPendentes", empenhos);
@@ -168,7 +173,7 @@ public class IndexController implements ErrorController {
 	public ModelAndView adicionaNota(Notafiscal notafiscal) {
 		ModelAndView mv = new ModelAndView("adicionaNotaFiscal");
 		notafiscal.setIdNotaFiscal(0);
-		List<Empenho> empenhos = empenhoRepository.findAll();
+		List<EmpenhoDTO> empenhos = dtoRepository.findAllWithoutFIle();
 		mv.addObject("empenhos", empenhos);
 		return mv;
 	}
