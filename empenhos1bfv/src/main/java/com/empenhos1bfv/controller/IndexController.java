@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Empenho;
 import com.empenhos1bfv.model.Empresa;
+import com.empenhos1bfv.model.Graduacao;
 import com.empenhos1bfv.model.Notafiscal;
 import com.empenhos1bfv.model.Protocolo;
 import com.empenhos1bfv.model.Secao;
@@ -95,7 +96,10 @@ public class IndexController implements ErrorController {
 	public List<Secao> getSecoes() {
 		return secaoRepository.findAll();
 	}
-
+	@ModelAttribute("graduacoes")
+	public Graduacao[] getGraduacoes() {
+		return Graduacao.values();
+	}
 	@RequestMapping("/empenhos")
 	public ModelAndView pendentes() {
 		ModelAndView mv = new ModelAndView("listaEmpenhos");
@@ -213,6 +217,14 @@ public class IndexController implements ErrorController {
 		model.addAttribute("error", "Acesso Negado");
 		model.addAttribute("message", "Você não tem permissão para acesso a esta área ou ação.");
 		return "error";
+	}
+	@GetMapping("/conta")
+	public ModelAndView alteraConta(Usuario usuario,@AuthenticationPrincipal User u) {
+		usuario = usuarioRepository.findByNome(u.getUsername()).get();
+		ModelAndView mv = new ModelAndView("conta");
+		mv.addObject("secoes", getSecoes());
+		mv.addObject("usuario", usuario);
+		return mv;
 	}
 	@GetMapping("/atualizavalores")
 	public String atualizaValores(){

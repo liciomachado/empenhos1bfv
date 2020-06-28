@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="" layout:fragment="corpo">
+		<div class="row">
+
+			<div id="loader-form" class="pre-load"></div>
+
+			<h3 class="header">Dados da conta</h3>
+
+			<form th:object="${usuario}" th:action="@{/usuario/update}" method="POST">
+				
+				<input type="hidden" th:field="*{idUsuario}"  >
+				
+				<div class="input-field col s4">
+					<i class="material-icons prefix">email</i> <input id="email"
+						type="text" class="validate" th:field="*{email}" required><label
+						for="email">E-mail</label><span
+						id="error-email2" class="helper-text"
+						data-error="Insira o email" data-success="OK"></span>
+				</div>
+				
+				<div class="input-field col s4">
+					<i class="material-icons prefix">colorize</i> <input
+						id="nome" type="text" class="validate"
+						th:field="*{nome}" required> <label
+						for="nome">Nome</label> <span
+						id="error-numeroEmpenho" class="helper-text"
+						data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s4">
+					<i class="material-icons prefix">colorize</i> <input
+						id="idt" type="text" class="validate" th:field="*{senhaGmail}" required> <label
+						for="idt">Idt militar</label> <span
+						id="error-numeroEmpenho" class="helper-text"
+						data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s6">
+					<div class="" id="">
+						<div class="red-text">
+							<select id="search1" class="js-example-basic-single autocomplete"
+								name="idEmpresa" th:field="*{secao}" required>
+								<option value="" selected>Selecione sua seção</option>
+								<option th:each="secao : ${secoes}"
+									th:value="${secao.idSecao}" th:text="${secao.nomeSecao}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="input-field col s6">
+					<select class="js-example-basic-single form-control col-md-11" id="grad" th:field="*{graduacao}" required>
+						<option value="">Selecione seu Posto/Graduação</option>
+						<option value="Coronel">Coronel</option>
+						<option value="Tenente Coronel">Tenente Coronel</option>
+						<option value="Major">Major</option>
+						<option value="Capitão">Capitão</option>
+						<option value="1º Tenente">1º Tenente</option>
+						<option value="2º Tenente">2º Tenente</option>
+						<option value="Aspirate a Oficial">Aspirate a Oficial</option>
+						<option value="Sub Tenente">Sub Tenente</option>
+						<option value="1º Sargento">1º Sargento</option>
+						<option value="2º Sargento">2º Sargento</option>
+						<option value="3º Sargento">3º Sargento</option>
+						<option value="Cabo">Cabo</option>
+						<option value="Soldado">Soldado</option>
+					</select>
+				</div>
+				<div class="input-field col s6">
+					<i class="material-icons prefix">arrow_forward</i> <input
+						id="senha" type="password" class="validate" th:field="*{senha}"
+						required> <label for="senha">Senha</label> <span
+						id="error-destino" class="helper-text"
+						data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				<div class="input-field col s6">
+					<i class="material-icons prefix">arrow_forward</i> <input
+						id="senhaGmail" type="password" class="validate"
+						required> <label for="senhaGmail">Confirme sua senha</label> <span
+						id="error-destino" class="helper-text"
+						data-error="Campo obrigatório" data-success="OK"></span>
+				</div>
+				
+				<div class="input-field col s4 right">
+					<button class="btn waves-effect waves-light right" type="submit">
+						Alterar <i class="material-icons right">send</i>
+					</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+	<script th:src="@{/js/empresas.js}" th:fragment="js"></script>
+</body>
+</html>
