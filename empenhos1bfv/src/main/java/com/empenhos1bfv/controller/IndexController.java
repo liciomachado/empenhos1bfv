@@ -2,6 +2,7 @@ package com.empenhos1bfv.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +57,8 @@ public class IndexController implements ErrorController {
 	UsuarioRepository usuarioRepository;
 	@Autowired
 	EmpenhoDTORepository dtoRepository;
-
+	@Autowired
+	Optional<Empenho> empenho;
 
 	@GetMapping("/")
 	public ModelAndView home(Empenho empenho) throws IOException {
@@ -211,5 +213,51 @@ public class IndexController implements ErrorController {
 		model.addAttribute("error", "Acesso Negado");
 		model.addAttribute("message", "Você não tem permissão para acesso a esta área ou ação.");
 		return "error";
+	}
+	@GetMapping("/atualizavalores")
+	public String atualizaValores(){
+		List<Object[]> emps = dtoRepository.atualizaPendentes();
+		for (Object[] at : emps) {
+			empenho = empenhoRepository.findById(Integer.parseInt(at[0].toString()));
+			Empenho emp = empenho.get();
+			
+			if (emp.getSaldoUtilizado() == 0 && at[2] != null) {
+				emp.setSaldoUtilizado(Double.parseDouble(at[2].toString()));
+			}
+			if (emp.getSaldo() == 0 && at[3] != null) {
+				emp.setSaldo(Double.parseDouble(at[3].toString()));
+			}
+			if(emp.getSaldoUtilizado() == 0) {
+				emp.setSaldo(emp.getValorTotal());
+			}
+			empenhoRepository.save(emp);
+			System.out.println(at[0]);
+			System.out.println(at[1]);
+			System.out.println(at[2]);
+			System.out.println(at[3]);
+			System.out.println("-------------------------------");
+		}
+		List<Object[]> emps2 = dtoRepository.atualizaPendentes();
+		for (Object[] at : emps2) {
+			empenho = empenhoRepository.findById(Integer.parseInt(at[0].toString()));
+			Empenho emp = empenho.get();
+			
+			if (emp.getSaldoUtilizado() == 0 && at[2] != null) {
+				emp.setSaldoUtilizado(Double.parseDouble(at[2].toString()));
+			}
+			if (emp.getSaldo() == 0 && at[3] != null) {
+				emp.setSaldo(Double.parseDouble(at[3].toString()));
+			}
+			if(emp.getSaldoUtilizado() == 0) {
+				emp.setSaldo(emp.getValorTotal());
+			}
+			empenhoRepository.save(emp);
+			System.out.println(at[0]);
+			System.out.println(at[1]);
+			System.out.println(at[2]);
+			System.out.println(at[3]);
+			System.out.println("-------------------------------");
+		}
+		return "redirect:/";
 	}
 }
