@@ -21,8 +21,7 @@ public class Empresa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEmpresa;
-	
-	@NotBlank(message = "Nome da empresa obrigatório")
+
 	private String nome;
 	
 	@NotBlank(message = "email é obrigatório")

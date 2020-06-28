@@ -3,7 +3,7 @@ $("#form-empresa").submit(function(evt){
 	
 	var empresa = {};
 	
-	empresa.nome = $("#nome").val();
+	empresa.nome = $("#nomeEmpresa").val();
 	empresa.contato = $("#contato").val();
 	empresa.email = $("#email").val();
 		

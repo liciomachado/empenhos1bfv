@@ -62,8 +62,6 @@ public class EmpresaController {
 	}
 	@PostMapping("/save")
 	public ResponseEntity<?> salvarEmpresa(Empresa empresa){
-		
-		log.info("Promocao {}",empresa.toString());
 		empresaRepository.save(empresa);
 		return ResponseEntity.ok().build();
 	}
