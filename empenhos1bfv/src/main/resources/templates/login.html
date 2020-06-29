@@ -26,8 +26,11 @@
 			<div th:if="${alerta != null}" role="alert">
 			 	<input name="erroSenha" class="senhaincorreta" value="LOGIN E/OU SENHA INCORRETOS">
 			</div>
+			<div th:if="${success != null}" role="alert">
+			 	<input class="confirmausuario" value="USUARIO CRIADO COM SUCESSO">
+			</div>
 			<input type="submit">
-			<a href="#" style="color: white; text-align: center;">Cadastre-se agora</a>
+			<a href="/novousuario" style="color: white; text-align: center;">Cadastre-se agora</a>
 		</form>
 	</div>
 </body>

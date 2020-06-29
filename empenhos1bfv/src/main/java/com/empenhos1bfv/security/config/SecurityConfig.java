@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 			// acessos públicos liberados
-			.antMatchers("/webjars/**", "/css/**", "/img/**", "/js/**").permitAll()
+			.antMatchers("/webjars/**", "/css/**", "/img/**", "/js/**","/materialize/**","/select2/**").permitAll()
+			.antMatchers("/novousuario","/usuario/novouser").permitAll()
 			
 		.anyRequest().authenticated()
 		.and()

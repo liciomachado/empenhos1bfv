@@ -9,9 +9,9 @@
 
 			<div id="loader-form" class="pre-load"></div>
 
-			<h3 class="header">Dados da conta</h3>
-
-			<form th:object="${usuario}" th:action="@{/usuario/update}" method="POST">
+			<h3 class="header"><span th:text="${usuario.idUsuario} == 0 ? 'CRIE SUA CONTA' : 'EDIÇÃO DE DADOS PESSOAIS'" /></h3>
+			
+			<form th:object="${usuario}" th:action="${usuario.idUsuario} == 0 ? @{/usuario/novouser} : @{/usuario/update}" method="POST">
 				
 				<input type="hidden" th:field="*{idUsuario}"  >
 				
@@ -85,7 +85,8 @@
 				
 				<div class="input-field col s4 right">
 					<button class="btn waves-effect waves-light right" type="submit">
-						Alterar <i class="material-icons right">send</i>
+						<span th:text="${usuario.idUsuario} == 0 ? 'Criar conta' : 'confirmar edição'" />
+						<i class="material-icons right">send</i>
 					</button>
 				</div>
 

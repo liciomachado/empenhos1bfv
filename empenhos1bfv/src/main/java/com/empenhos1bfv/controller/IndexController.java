@@ -81,7 +81,11 @@ public class IndexController implements ErrorController {
 		model.addAttribute("subtexto", "Acesso permitido apenas para cadastros já ativados.");
 		return "login";
 	}	
-	
+	@GetMapping("/redirecionalogin")
+	public String contaSucesso(ModelMap model) {
+		model.addAttribute("success", "sucesso");
+		return "login";
+	}
 	@ModelAttribute("empenhosNavbar")
 	public List<EmpenhoDTO> getEmpenhos() {
 		return dtoRepository.findAllWithoutFIle();
@@ -224,6 +228,12 @@ public class IndexController implements ErrorController {
 		ModelAndView mv = new ModelAndView("conta");
 		mv.addObject("secoes", getSecoes());
 		mv.addObject("usuario", usuario);
+		return mv;
+	}
+	@GetMapping("/novousuario")
+	public ModelAndView novaConta(Usuario usuario) {
+		ModelAndView mv = new ModelAndView("conta");
+		mv.addObject("secoes", getSecoes());
 		return mv;
 	}
 	@GetMapping("/atualizavalores")

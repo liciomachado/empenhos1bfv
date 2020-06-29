@@ -7,10 +7,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Usuario;
@@ -35,5 +35,13 @@ public class UsuarioController {
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 		usuarioRepository.save(usuario);
 		return "redirect:/";
+	}
+	@PostMapping("/novouser")
+	public String criaUser(@Valid Usuario usuario,ModelMap model) {
+		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+		usuario.setTipoUser("1");
+		usuarioRepository.save(usuario);
+		model.addAttribute("success", "sucesso");
+		return "redirect:/redirecionalogin";
 	}
 }
