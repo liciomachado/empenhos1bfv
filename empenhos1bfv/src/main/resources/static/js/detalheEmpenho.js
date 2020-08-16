@@ -128,13 +128,50 @@ $("#modalMSGautomatica").submit(function(evt){
 			M.toast({html: 'Não é possivel realizar esta ação! Contato o administrador.', timeRemaining: 15000, displayLength: 10000, classes: 'red rounded'});
 		},
 		success: function(){
+			M.toast({html: 'Mensagem enviada com sucesso', timeRemaining: 15000, displayLength: 10000, classes: 'green rounded'});
 			$("#loader-form").fadeOut(800, function(){
 				$("#modalExclusao").fadeIn(250);
 				$("#loader-form").removeClass("loader");
 			});
 		},
 		complete: function(){
-			setTimeout(function(){ location.reload(); }, 500);
+			//setTimeout(function(){ location.reload(); }, 2000);
+		}
+	});
+});
+
+//ENVIO DE MENSAGEM DE ABERTURA DE PROCESSO ADMINISTRATIVO
+$("#modalMensagemPA").submit(function(evt){
+	evt.preventDefault();
+	
+	var form = $('#modalMensagemPA')[0];
+    var data = new FormData(form);
+    
+	$.ajax({
+		method: "POST",
+		url: "/empenho/emailprocessoadm",
+		enctype: 'multipart/form-data',
+		data: data,
+		processData: false,
+        contentType: false,
+        cache: false,
+		beforeSend: function(){
+			$("#loader-form").addClass("loader").show();
+			console.log(document.getElementsByName("msgPedidoPA"));
+		},
+		error: function(xhr){
+			console.log("> error: ",xhr.responseText);
+			M.toast({html: 'Não é possivel realizar esta ação! Contato o administrador.', timeRemaining: 15000, displayLength: 10000, classes: 'red rounded'});
+		},
+		success: function(){
+			M.toast({html: 'Solicitação enviada com sucesso', timeRemaining: 15000, displayLength: 10000, classes: 'green rounded'});
+			$("#loader-form").fadeOut(800, function(){
+				$("#modalExclusao").fadeIn(250);
+				$("#loader-form").removeClass("loader");
+			});
+		},
+		complete: function(){
+			//setTimeout(function(){ location.reload(); }, 2000);
 		}
 	});
 });

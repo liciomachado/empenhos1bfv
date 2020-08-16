@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<title>Clínica Spring Security</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="clínica médica com agendamento de consultas online" />
+<meta name="author" content="ballem" />
+<style>
+a:link, a:visited {
+  background-color: #f1f3f4;
+  border: 2px solid;
+  border-radius: 5px;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: DodgerBlue;
+}
+</style>
+</head>
+<body style="margin: 0; padding: 0; ">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; padding: 40px 30px 40px 30px; font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td align="center" style="padding: 20px 0 10px 0;">
+                <img src="cid:logo" alt="http://localhost:8080/" style="display: block; margin-left: auto; margin-right: auto; width: 15%;" />
+            	<h1 style="font-weight: 200;">1º Batalhão Ferroviario</h1>
+				<p style="margin-bottom: 0;"><strong>Notificação de atraso de entrega</strong></p>
+			</td>
+        </tr>
+        <tr>
+         	<td align="center" bgcolor="#ADD8E6">
+                <h4 class="text-center" th:text="${titulo}" style="color: red;"><strong>Atenção</strong></h4>
+            	<p th:text="${texto}">Precisamos que confirme seu cadastro...</p>
+            	<b><p th:text="${empenho}">Empenho:</p></b>
+            	<b><p th:text="${valor}">Valor</p></b>
+            	<b><p th:text="${data}"><strong>Data de envio:</strong></p></b>
+            	
+            	<p>Mesmo após o recebimento da nota de empenho, até a presente data não recebemos o material empenhado. 
+            		Lembrando que a entrega deverá ser realizada conforme as especificações contidas no EDITAL.</p>
+            		
+           		<p >No caso de não haver justificativa plausível, ou entrega do material em 48h, o 1º Batalhão Ferroviário iniciará um Processo Administrativo 
+           		para a sanção prevista no Art. 87 da Lei 8.666/93 (Lei de Licitações) e Lei 10.520 (Lei do Pregão).</p>
+           		
+           		<p>Obs: A data de recebimento deste documento não está condicionada a resposta formal e sim da data de entrega do correio eletrônico.</p>
+           		
+           		<p th:text="${hoje}">Lages-sc...</p>
+           		
+           		<p>Atenciosamente,</p>
+           		
+    	        <p class="text-center mb-0">MATHEUS MARTINS DE <b>OLIVEIRA - 2º TEN </b><br>
+												Chefe do Almoxarifado – 1º B Fv</p>
+            	
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="LightGray" style="padding: 10px 0px 10px 0px; text-align:center;">
+                <p style="margin-bottom: .25rem;"><strong>1º Batalhão Ferroviario - Lages / SC</strong><br> 
+                5ª RM - CMS <br> 
+                (49) 3251-9500</p>
+            </td>
+        </tr>
+    </table>  
+</body>
+</body>
+</html>

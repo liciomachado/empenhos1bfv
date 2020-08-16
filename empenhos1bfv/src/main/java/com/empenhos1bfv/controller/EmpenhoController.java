@@ -111,6 +111,7 @@ public class EmpenhoController {
 		//---------------------------------------ENVIO DO EMAIL----------------------------------------------------------------
 		long tempoInicio = System.currentTimeMillis();
 		mailer.enviarComAnexo(empenho, msgComplementar, file);
+		mailer.enviarNotificacaoAtraso(empenho.getEmpresa().getEmail(), empenho);
 		System.out.println("Tempo Total de envio: "+((System.currentTimeMillis()-tempoInicio)/1000)+" segundos....");
 		//---------------------------------------FIM ENVIO DO EMAIL------------------------------------------------------------
 		return ResponseEntity.ok().build();
@@ -211,6 +212,24 @@ public class EmpenhoController {
 	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(empenhoRepository.findById(id).get().getEmpenhoDigitalizado(), headers, HttpStatus.OK);
 	    return response;
+	}
+	@PostMapping("/emailpendencia")
+	public ResponseEntity<?> emailCobrancaAuto(@RequestParam int idEmpenho,@AuthenticationPrincipal User u) throws MessagingException{
+		Empenho empenho = empenhoRepository.findById(idEmpenho).get();
+		mailer.enviarNotificacaoAtraso(empenho.getEmpresa().getEmail(), empenho);
+		Observacoes obs = new Observacoes(empenho,"Mensagem de cobrança automatica enviada!",LocalDate.now()
+													,usuarioRepository.findByNome(u.getUsername()).get());
+		obsRepository.save(obs);
+		return ResponseEntity.ok().build();	
+	}
+	@PostMapping("/emailprocessoadm")
+	public ResponseEntity<?> emailProcessoADM(@RequestParam int idEmpenho,String msgPedidoPA,@AuthenticationPrincipal User u) throws MessagingException, IOException{
+		Empenho empenho = empenhoRepository.findById(idEmpenho).get();
+		mailer.enviarPedidoPA(idEmpenho, msgPedidoPA, u);
+		Observacoes obs = new Observacoes(empenho,"Solicitou abertura de processo administrativo.",LocalDate.now()
+													,usuarioRepository.findByNome(u.getUsername()).get());
+		obsRepository.save(obs);
+		return ResponseEntity.ok().build();	
 	}
 	
 	@PostMapping("/redirect")

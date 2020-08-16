@@ -113,7 +113,7 @@
 	</fieldset>
 	<!-- FIELDSET EMPRESA -->
 	<fieldset class="border p-2" id="empresa">
-		<legend class="w-auto">Empresa </legend>
+	<a th:href="@{/empresas/{id} (id=${empenho.empresa.idEmpresa})}"><legend class="w-auto">Empresa </legend></a>
 			<form enctype="multipart/form-data" th:object="${empenho}">
 				<div class="input-field col s4">
 					<i class="material-icons prefix">account_circle</i> 
