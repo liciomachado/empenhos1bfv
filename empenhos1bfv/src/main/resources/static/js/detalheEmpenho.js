@@ -175,3 +175,9 @@ $("#modalMensagemPA").submit(function(evt){
 		}
 	});
 });
+
+function pegaNumNF() {
+	var nf = document.getElementById("chavedeacesso").value;
+	nf = nf.substring(25,34);
+	document.getElementById("numeroNota").value = nf;
+}

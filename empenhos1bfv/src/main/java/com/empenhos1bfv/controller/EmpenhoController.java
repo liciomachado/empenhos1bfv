@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.empenhos1bfv.dto.EmpenhoDTO;
 import com.empenhos1bfv.model.Empenho;
@@ -192,6 +193,15 @@ public class EmpenhoController {
 		mv.addObject("notafiscal", notaFiscal);  
 		return mv;
 	}
+	@PostMapping("/excluir")
+	public String excluirEmpenho(@RequestParam int idEmpenho,RedirectAttributes attr) {
+		Empenho empenho = empenhoRepository.findById(idEmpenho).get();
+		empenhoRepository.delete(empenho);
+		
+		attr.addFlashAttribute("exclusao", "Empenho "+empenho.getNumeroEmpenho() +" excluido com sucesso");
+		return "redirect:/";
+	}
+	
 	@PostMapping("/saveobs")
 	public String salvarObservacaoEmpenho(@Valid Observacoes obs, @AuthenticationPrincipal User u){
 		

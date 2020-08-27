@@ -5,6 +5,13 @@
 </head>
 <body>
 	<div class="" layout:fragment="corpo">
+	
+	  	<div th:if="${exlusao} != null" class="card-panel teal lighten-2">
+			<span>
+			  	<strong th:text="${exlusao}"></strong>
+			</span>	  	
+	  	</div>
+	
 		<div class="row">
 			<a th:href="@{/novoempenho}"> 
 				<span class="box"> 
@@ -24,7 +31,7 @@
 					<p>Protocolar</p>
 				</span>
 			</a> 
-			<a th:href="@{/empenhos}"> 
+			<a th:href="@{/empenhos?action=todos}"> 
 				<span class="box"> 
 				<img alt="img" width="50" height="50" src="../img/index/hourglass.png">
 					<p>Empenhos</p>

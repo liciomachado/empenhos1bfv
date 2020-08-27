@@ -134,7 +134,7 @@ public class NotaFiscalController {
 												,LocalDate.now()
 												,usuarioRepository.findByNome(u.getUsername()).get()); 
 				obsRepository.save(obs);
-				protocolo.getNotaFiscal().setDataProtocolado(null);
+				protocolo.getNotaFiscal().setDataProtocolado(LocalDate.now());
 				protocolo.getNotaFiscal().setSecao(usuarioRepository.findByNome(u.getUsername()).get().getSecao());
 				protocolo.setUsuarioRecebedor(usuarioRepository.findByNome(u.getUsername()).get());
 				protocoloRepository.save(protocolo);

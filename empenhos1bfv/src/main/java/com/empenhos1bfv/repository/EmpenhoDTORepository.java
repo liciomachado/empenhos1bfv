@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.empenhos1bfv.dto.EmpenhoDTO;
 
+
 public interface EmpenhoDTORepository  extends JpaRepository<EmpenhoDTO, Integer>  {
 
 	@Query(value="SELECT e.id_empenho,e.numero_empenho,e.empresa_id_empresa,e.destino,e.valor_total,e.data_empenho,e.etapa,e.usuario_id_usuario,\r\n" + 
@@ -43,17 +44,17 @@ public interface EmpenhoDTORepository  extends JpaRepository<EmpenhoDTO, Integer
 	List<Object[]> atualizaRecebidos();
 	
 	@Query(value="SELECT e.id_empenho,e.numero_empenho,e.empresa_id_empresa,e.destino,e.valor_total,e.data_empenho,e.etapa,e.usuario_id_usuario,"
-			+ "e.saldo,e.saldo_utilizado FROM empenho as e where e.valor_total = saldo_utilizado", nativeQuery = true)
+			+ "e.saldo,e.saldo_utilizado FROM empenho as e where e.saldo = 0", nativeQuery = true)
 	List<EmpenhoDTO> findQuitados();
 	
 	@Query(value="SELECT e.id_empenho,e.numero_empenho,e.empresa_id_empresa,e.destino,e.valor_total,e.data_empenho,e.etapa,e.usuario_id_usuario,"
-			+ "e.saldo,e.saldo_utilizado FROM empenho as e where e.valor_total != saldo_utilizado", nativeQuery = true)
+			+ "e.saldo,e.saldo_utilizado FROM empenho as e where e.saldo != 0", nativeQuery = true)
 	List<EmpenhoDTO> findRestosAPagar();
 	
 	@Query("select e from Empenho e where e.empresa.idEmpresa = :id")
 	List<EmpenhoDTO> findByEmpresa(@Param("id") int id);
 	
 	@Query(value="SELECT e.id_empenho,e.numero_empenho,e.empresa_id_empresa,e.destino,e.valor_total,e.data_empenho,e.etapa,e.usuario_id_usuario,"
-			+ "e.saldo,e.saldo_utilizado FROM empenho as e where e.valor_total != e.saldo_utilizado and e.data_empenho <= DATE_SUB(now(), INTERVAL 30 DAY)", nativeQuery = true)
+			+ "e.saldo,e.saldo_utilizado FROM empenho as e where e.saldo != 0 and e.data_empenho <= DATE_SUB(now(), INTERVAL 30 DAY)", nativeQuery = true)
 	List<EmpenhoDTO> findVencidos();
 }

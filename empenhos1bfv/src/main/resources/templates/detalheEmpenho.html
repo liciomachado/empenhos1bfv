@@ -77,21 +77,26 @@
 		<legend class="w-auto">Empenho </legend>
 		
 			<form enctype="multipart/form-data" th:object="${empenho}">
+				<div class="input-field col s2">
+					<i class="material-icons prefix">attach_money</i>
+					<input id="valorTotal2" type="text" class="validate" th:field="*{usuario.nome}" disabled>
+					<label for="valorTotal2">Por</label>
+				</div>
 				<div class="input-field col s3">
 					<i class="material-icons prefix">colorize</i>
 					<input id="numeroEmpenho" type="text" class="validate" data-length="12" th:field="*{numeroEmpenho}" disabled> 
 					<label for="numeroEmpenho">Numero do Empenho</label>
 		                  <span id="error-numeroEmpenho" class="helper-text" data-error="Campo obrigatório" data-success="OK"></span>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s2">
 					<i class="material-icons prefix">attach_money</i>
 					<input id="valorTotal2" type="text" class="validate" th:field="*{valorTotal}" disabled>
 					<label for="valorTotal2">Valor</label>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s2">
 					<i class="material-icons prefix">arrow_forward</i>
 					<input id="destino" type="text" class="validate" th:field="*{destino}" disabled> 
-					<label for="destino">Destino / Verba</label>
+					<label for="destino">Destino</label>
 				</div>
 				<div class="input-field col s1">
 					<a th:href="@{/empenho/pdf/{id} (id=${empenho.idEmpenho}) }" target="_blank" class="tooltipped" data-position="top" data-tooltip="Visualizar empenho">
@@ -173,7 +178,7 @@
 			<form id="form-nota" th:object="${notafiscal}" th:action="@{/notafiscal/savenota}" method="POST">
 				<div class="input-field col s5">
 					<i class="material-icons prefix">business</i>
-					<input id="chavedeacesso" type="text" class="validate" data-length="44" required th:field="*{chaveAcesso}"> 
+					<input id="chavedeacesso" onchange="pegaNumNF();" type="text" class="validate" data-length="44" required th:field="*{chaveAcesso}"> 
 					<label for="chavedeacesso">Chave de Acesso</label>
 				</div>
 				<div class="input-field col s2">
