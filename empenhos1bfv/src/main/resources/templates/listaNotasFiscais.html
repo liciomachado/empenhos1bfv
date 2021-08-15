@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+
 <body>
 	<div class="" layout:fragment="corpo">
 		<div class="row">
 
-			<h1 class="header">Notas Fiscais</h1>			
-			
+			<h1 class="header">Notas Fiscais</h1>
+
 			<button class="btn waves-effect waves-light" name="action" value="quitados">Todas recebidas</button>
 
 		</div>
@@ -28,14 +30,16 @@
 				</tr>
 			</thead>
 			<tbody style="cursor: pointer">
-				<tr th:each="nota : ${notasRecebidos}" th:onclick="'location.href = \'' + @{/empenho/{id}(id=${nota.empenho.idEmpenho})} + '\''">
-					<td><a th:href="@{/empenho/pdf/{id} (id=${nota.empenho.idEmpenho}) }"
-						target="_blank" class="tooltipped" data-position="top"
-						data-tooltip="Visualizar empenho" th:text="${nota.empenho.numeroEmpenho}"></a></td>
-					<td th:text="${nota.empenho.empresa.nome}"></td>
-					<td th:text="${nota.empenho.destino}"></td>
-	             	<td><span th:text="${#numbers.formatDecimal(nota.valorTotal, 0, 'POINT', 2, 'COMMA')}">10.00</span></td>
-					<td th:text="${nota.empenho.dataEmpenho}"></td>
+				<tr th:each="nota : ${notasRecebidos}"
+					th:onclick="'location.href = \'' + @{/empenho/{id}(id=${nota.idEmpenho})} + '\''">
+					<td><a th:href="@{/empenho/pdf/{id} (id=${nota.idEmpenho}) }" target="_blank" class="tooltipped"
+							data-position="top" data-tooltip="Visualizar empenho" th:text="${nota.numeroEmpenho}"></a>
+					</td>
+					<td th:text="${nota.nome}"></td>
+					<td th:text="${nota.destino}"></td>
+					<td><span th:text="${#numbers.formatDecimal(nota.valorTotal, 0, 'POINT', 2, 'COMMA')}">10.00</span>
+					</td>
+					<td th:text="${nota.dataEmissao}"></td>
 					<td th:text="${nota.dataRecebido}"></td>
 					<td><a th:href="@{http://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx?tipoConteudo=XbSeqxE8pl8%3D&tipoConsulta=completa&nfe={chave} (chave=${nota.chaveAcesso}) }"
 							target="_blank" th:text="${nota.numNota}"></td>
@@ -45,4 +49,5 @@
 
 	<script th:src="@{/js/empresas.js}" th:fragment="js"></script>
 </body>
+
 </html>

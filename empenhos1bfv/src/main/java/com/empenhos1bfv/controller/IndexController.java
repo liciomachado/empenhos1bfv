@@ -1,6 +1,8 @@
 package com.empenhos1bfv.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.empenhos1bfv.dto.EmpenhoDTO;
+import com.empenhos1bfv.dto.NotaFiscalRetornoDTO;
 import com.empenhos1bfv.model.Empenho;
 import com.empenhos1bfv.model.Empresa;
 import com.empenhos1bfv.model.Graduacao;
@@ -65,26 +68,30 @@ public class IndexController implements ErrorController {
 		ModelAndView mv = new ModelAndView("home");
 		return mv;
 	}
+
 	// abrir pagina login
-	@GetMapping({"/login"})
+	@GetMapping({ "/login" })
 	public String login() {
-		
+
 		return "login";
 	}
+
 	// login invalido
-	@GetMapping({"/login-error"})
+	@GetMapping({ "/login-error" })
 	public String loginError(ModelMap model) {
 		model.addAttribute("alerta", "erro");
 		model.addAttribute("titulo", "Crendenciais inválidas!");
 		model.addAttribute("texto", "Login ou senha incorretos, tente novamente.");
 		model.addAttribute("subtexto", "Acesso permitido apenas para cadastros já ativados.");
 		return "login";
-	}	
+	}
+
 	@GetMapping("/redirecionalogin")
 	public String contaSucesso(ModelMap model) {
 		model.addAttribute("success", "sucesso");
 		return "login";
 	}
+
 	@ModelAttribute("empenhosNavbar")
 	public List<EmpenhoDTO> getEmpenhos() {
 		return dtoRepository.findAllWithoutFIle();
@@ -99,10 +106,12 @@ public class IndexController implements ErrorController {
 	public List<Secao> getSecoes() {
 		return secaoRepository.findAll();
 	}
+
 	@ModelAttribute("graduacoes")
 	public Graduacao[] getGraduacoes() {
 		return Graduacao.values();
 	}
+
 	@RequestMapping("/empenhos")
 	public ModelAndView pendentes() {
 		ModelAndView mv = new ModelAndView("listaEmpenhos");
@@ -110,39 +119,58 @@ public class IndexController implements ErrorController {
 		mv.addObject("empenhosPendentes", empenhos);
 		return mv;
 	}
+
 	@GetMapping("/empenhos")
 	public ModelAndView filtroEmpenho(@RequestParam String action) {
 		ModelAndView mv = new ModelAndView("listaEmpenhos");
 		List<EmpenhoDTO> empenhos = dtoRepository.findAllWithoutFIle();
 		switch (action) {
-		case "todos":
-			empenhos = dtoRepository.findAllWithoutFIle();
-			break;
-		case "quitados":
-			empenhos = dtoRepository.findQuitados();
-			break;
-		case "pendentes":
-			empenhos = dtoRepository.findEmpenhosPendentes();
-			break;
-		case "vencidos":
-			empenhos = dtoRepository.findVencidos();
-			break;
-		case "rp":
-			empenhos = dtoRepository.findRestosAPagar();
-			break;
-		default:
-			empenhos = dtoRepository.findAllWithoutFIle();
+			case "todos":
+				empenhos = dtoRepository.findAllWithoutFIle();
+				break;
+			case "quitados":
+				empenhos = dtoRepository.findQuitados();
+				break;
+			case "pendentes":
+				empenhos = dtoRepository.findEmpenhosPendentes();
+				break;
+			case "vencidos":
+				empenhos = dtoRepository.findVencidos();
+				break;
+			case "rp":
+				empenhos = dtoRepository.findRestosAPagar();
+				break;
+			default:
+				empenhos = dtoRepository.findAllWithoutFIle();
 		}
-		
+
 		mv.addObject("empenhosPendentes", empenhos);
 		return mv;
 	}
-	
+
 	@RequestMapping("/notasfiscais")
 	public ModelAndView recebidos() {
 		ModelAndView mv = new ModelAndView("listaNotasFiscais");
-		List<Notafiscal> notas = notaFiscalRepository.findEmpenhosRecebidos();
-		mv.addObject("notasRecebidos", notas);
+		List<Object[]> res = notaFiscalRepository.findEmpenhosRecebidos();
+		List<NotaFiscalRetornoDTO> dtoResult = new ArrayList<>();
+
+		for (Object[] obj : res) {
+			NotaFiscalRetornoDTO nfDTOResult = new NotaFiscalRetornoDTO();
+			nfDTOResult.setIdNotaFiscal((int) obj[0]);
+			nfDTOResult.setChaveAcesso((String) obj[1]);
+			nfDTOResult.setDataProtocolado((Date) obj[2]);
+			nfDTOResult.setIdEmpenho((int) obj[3]);
+			nfDTOResult.setNumeroEmpenho((String) obj[6]);
+			nfDTOResult.setNome((String) obj[7]);
+			nfDTOResult.setDestino((String) obj[8]);
+			nfDTOResult.setValorTotal((double) obj[9]);
+			nfDTOResult.setDataEmissao((Date) obj[10]);
+			nfDTOResult.setDataRecebido((Date) obj[11]);
+			nfDTOResult.setNumNota((int) obj[12]);
+
+			dtoResult.add(nfDTOResult);
+		}
+		mv.addObject("notasRecebidos", dtoResult);
 		return mv;
 	}
 
@@ -172,7 +200,7 @@ public class IndexController implements ErrorController {
 		mv.addObject("minhasNotas", notas);
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/novoempenho", method = RequestMethod.GET)
 	public ModelAndView adicionaEmpenho(Empenho empenho) {
 		ModelAndView mv = new ModelAndView("adicionaEmpenho");
@@ -189,11 +217,11 @@ public class IndexController implements ErrorController {
 		mv.addObject("empenhos", empenhos);
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/novanota/{id}", method = RequestMethod.GET)
-	public ModelAndView alteraNota(@PathVariable("id") int id,Notafiscal notafiscal) {
+	public ModelAndView alteraNota(@PathVariable("id") int id, Notafiscal notafiscal) {
 		ModelAndView mv = new ModelAndView("adicionaNotaFiscal");
-		notafiscal =  notaFiscalRepository.findById(id).get();
+		notafiscal = notaFiscalRepository.findById(id).get();
 		List<Empenho> empenhos = empenhoRepository.findAll();
 		mv.addObject("notafiscal", notafiscal);
 		mv.addObject("empenhos", empenhos);
@@ -215,43 +243,46 @@ public class IndexController implements ErrorController {
 	public String getErrorPath() {
 		return "error";
 	}
-	
+
 	// acesso negado
-	@GetMapping({"/acesso-negado"})
+	@GetMapping({ "/acesso-negado" })
 	public String acessoNegado(ModelMap model, HttpServletResponse resp) {
 		model.addAttribute("status", resp.getStatus());
 		model.addAttribute("error", "Acesso Negado");
 		model.addAttribute("message", "Você não tem permissão para acesso a esta área ou ação.");
 		return "error";
 	}
+
 	@GetMapping("/conta")
-	public ModelAndView alteraConta(Usuario usuario,@AuthenticationPrincipal User u) {
+	public ModelAndView alteraConta(Usuario usuario, @AuthenticationPrincipal User u) {
 		usuario = usuarioRepository.findByNome(u.getUsername()).get();
 		ModelAndView mv = new ModelAndView("conta");
 		mv.addObject("secoes", getSecoes());
 		mv.addObject("usuario", usuario);
 		return mv;
 	}
+
 	@GetMapping("/novousuario")
 	public ModelAndView novaConta(Usuario usuario) {
 		ModelAndView mv = new ModelAndView("conta");
 		mv.addObject("secoes", getSecoes());
 		return mv;
 	}
+
 	@GetMapping("/atualizavalores")
-	public String atualizaValores(){
+	public String atualizaValores() {
 		List<Object[]> emps = dtoRepository.atualizaPendentes();
 		for (Object[] at : emps) {
 			empenho = empenhoRepository.findById(Integer.parseInt(at[0].toString()));
 			Empenho emp = empenho.get();
-			
+
 			if (emp.getSaldoUtilizado() == 0 && at[2] != null) {
 				emp.setSaldoUtilizado(Double.parseDouble(at[2].toString()));
 			}
 			if (emp.getSaldo() == 0 && at[3] != null) {
 				emp.setSaldo(Double.parseDouble(at[3].toString()));
 			}
-			if(emp.getSaldoUtilizado() == 0) {
+			if (emp.getSaldoUtilizado() == 0) {
 				emp.setSaldo(emp.getValorTotal());
 			}
 			empenhoRepository.save(emp);
@@ -265,14 +296,14 @@ public class IndexController implements ErrorController {
 		for (Object[] at : emps2) {
 			empenho = empenhoRepository.findById(Integer.parseInt(at[0].toString()));
 			Empenho emp = empenho.get();
-			
+
 			if (emp.getSaldoUtilizado() == 0 && at[2] != null) {
 				emp.setSaldoUtilizado(Double.parseDouble(at[2].toString()));
 			}
 			if (emp.getSaldo() == 0 && at[3] != null) {
 				emp.setSaldo(Double.parseDouble(at[3].toString()));
 			}
-			if(emp.getSaldoUtilizado() == 0) {
+			if (emp.getSaldoUtilizado() == 0) {
 				emp.setSaldo(emp.getValorTotal());
 			}
 			empenhoRepository.save(emp);

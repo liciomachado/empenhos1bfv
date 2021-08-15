@@ -2,6 +2,7 @@ package com.empenhos1bfv.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,10 @@ import com.empenhos1bfv.dto.EmpenhoDTO;
 
 public interface EmpenhoDTORepository  extends JpaRepository<EmpenhoDTO, Integer>  {
 
+	@Query(value="SELECT e.id_empenho,e.numero_empenho,e.empresa_id_empresa,e.destino,e.valor_total,e.data_empenho,e.etapa,e.usuario_id_usuario,\r\n" + 
+			"e.saldo,e.saldo_utilizado FROM empenho as e", nativeQuery = true)
+	List<EmpenhoDTO> findAllWithoutFIle(Pageable page);
+	
 	@Query(value="SELECT e.id_empenho,e.numero_empenho,e.empresa_id_empresa,e.destino,e.valor_total,e.data_empenho,e.etapa,e.usuario_id_usuario,\r\n" + 
 			"e.saldo,e.saldo_utilizado FROM empenho as e", nativeQuery = true)
 	List<EmpenhoDTO> findAllWithoutFIle();

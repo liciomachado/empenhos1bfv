@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,13 +31,11 @@ import com.empenhos1bfv.repository.UsuarioRepository;
 @Controller
 @RequestMapping("/empresas")
 public class EmpresaController {
-	
-	private static Logger log = LoggerFactory.getLogger(EmpresaController.class);
 
 	@Autowired
 	EmpresaRepository empresaRepository;
 	@Autowired
-	ObservacaoEmpresaRepository observacaoEmpresaRepository;	
+	ObservacaoEmpresaRepository observacaoEmpresaRepository;
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	@Autowired
@@ -47,12 +43,11 @@ public class EmpresaController {
 	@Autowired
 	EmpenhoDTORepository dtoRepository;
 
-	
 	@ModelAttribute("empenhosNavbar")
 	public List<EmpenhoDTO> getEmpenhos() {
 		return dtoRepository.findAllWithoutFIle();
 	}
-	
+
 	@GetMapping("/")
 	public ModelAndView empresas() {
 		ModelAndView mv = new ModelAndView("empresas");
@@ -60,29 +55,32 @@ public class EmpresaController {
 		mv.addObject("empresas", empresas);
 		return mv;
 	}
+
 	@PostMapping("/save")
-	public ResponseEntity<?> salvarEmpresa(Empresa empresa){
+	public ResponseEntity<?> salvarEmpresa(Empresa empresa) {
 		empresaRepository.save(empresa);
 		return ResponseEntity.ok().build();
 	}
+
 	@PostMapping("/saveobs")
-	public String salvarObservacaoEmpresa(@Valid ObservacoesEmpresa obsEmpresa, @AuthenticationPrincipal User u){
-		
+	public String salvarObservacaoEmpresa(@Valid ObservacoesEmpresa obsEmpresa, @AuthenticationPrincipal User u) {
+
 		obsEmpresa.setDataObs(LocalDate.now());
 		obsEmpresa.setUsuario(usuarioRepository.findByNome(u.getUsername()).get());
 		observacaoEmpresaRepository.save(obsEmpresa);
-		
-		return "redirect:/empresas/"+obsEmpresa.getEmpresa().getIdEmpresa();
+
+		return "redirect:/empresas/" + obsEmpresa.getEmpresa().getIdEmpresa();
 	}
+
 	@GetMapping("/{id}")
 	public ModelAndView detalheEmpresa(@PathVariable("id") int id, ObservacoesEmpresa observacao) {
 		observacao.setEmpresa(empresaRepository.findById(id).get());
 		double valorTotal = 0;
-		if(empresaRepository.getValorTotalPorEmpresa(id) != null) {
+		if (empresaRepository.getValorTotalPorEmpresa(id) != null) {
 			valorTotal = empresaRepository.getValorTotalPorEmpresa(id);
 		}
 		int tempoMedio = 0;
-		if(empresaRepository.getTempoMedioPorEmpresa(id) != null){
+		if (empresaRepository.getTempoMedioPorEmpresa(id) != null) {
 			tempoMedio = empresaRepository.getTempoMedioPorEmpresa(id);
 		}
 		DecimalFormat formatador = new DecimalFormat("0.00");

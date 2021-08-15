@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="EMPRESA")
+@Table(name = "EMPRESA")
 public class Empresa implements Serializable {
 
 	@Id
@@ -23,23 +23,23 @@ public class Empresa implements Serializable {
 	private int idEmpresa;
 
 	private String nome;
-	
+
 	@NotBlank(message = "email é obrigatório")
 	private String email;
-	
+
 	@NotBlank(message = "Tel de contato obrigatório")
 	private String contato;
-	
+
 	private String cnpj;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "empresa")
 	private List<Empenho> empenhos;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "empresa")
 	private List<ObservacoesEmpresa> observacoesEmpresa;
-	
+
 	public int getIdEmpresa() {
 		return idEmpresa;
 	}
